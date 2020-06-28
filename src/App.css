@@ -1,0 +1,30 @@
+body {
+  background-color: rgb(12, 11, 11);
+  color: white;
+}
+
+
+.App .item-container {
+  justify-content: center;
+  padding: 2% 3%;
+  width: 35%;
+}
+
+.App .item-container img {
+  position: relative;
+  height: 100px;
+  width: 100px;
+  
+}
+
+.searchbar {
+  background-color: white ;
+  border: white;
+}
+
+
+
+ .btn-outline-primary {
+   color: orangered;
+   border: orangered;
+ }
