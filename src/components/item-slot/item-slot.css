@@ -1,16 +1,11 @@
-.App{
-  overflow: hidden;
-}
-
-.item-border  {
+.item-border {
   display: inline-flex;
-  align-items: center;
+  align-content: center;
   height: 62px;
   width: 62px;
-  margin: 20px;
 }
-.item-icon {
 
+.item-icon {
 	padding:1px;
 	background: -moz-linear-gradient(
 		top,
@@ -36,7 +31,7 @@
 		inset 0px 0px 2px rgba(255,255,255,1);
 
 
-	 box-shadow: 2px 3px 3px black;
+	box-shadow: 2px 3px 3px black;
   box-shadow: 0 0 2px 1px black;
   border-top: 1px solid grey;
   border-bottom: 1px solid black;
@@ -47,14 +42,8 @@
   object-fit: cover;
   vertical-align: middle;
   border-style: 2px solid darkgrey;
+  box-shadow: invert(0 0 2px 1px black);
 }
-
-/* .item-border {
-  border-radius: 7%;
-  border-style: 3px solid darkgrey;
-  box-shadow: 0 1px 3px;
-} */
-
 .item h3 {
   font-family: 'Open Sans', sans-serif;
     font-size: 12px;
