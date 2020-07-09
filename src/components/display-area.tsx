@@ -13,7 +13,7 @@ export const DisplayArea: React.FC<DisplayAreaProps> = (props) => {
     }
   }, [props]);
 
-  
+
 
   return (
     <div className="display-area">
@@ -26,7 +26,6 @@ export const DisplayArea: React.FC<DisplayAreaProps> = (props) => {
                 <h3>{item.name}</h3>
                 <ul>
                   <li>quality:{item.quality}</li>
-                  
                   <li>itemlvl:{item.itemLevel}</li>
                   <li>Permanent Enchant:{item.permanentEnchant}</li>
                   <li>Temporary Enchant:{item.temporaryEnchant}</li>
