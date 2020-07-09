@@ -1,101 +1,78 @@
-import React from "react";
-import "./App.css";
-import { Searchbar } from "./components/searchbar/searchbar";
-import { DisplayArea } from "./components/display-area";
-import axios from "axios";
-import { API, placeholderData } from "./libs/placeholders";
+import React, { useState, useEffect } from "react";
+import { Searchbar } from './components/searchbar/searchbar';
+import { WCRAFT_API_URL } from './placeholders';
+import { Header } from './components/header/header';
+import { Inventory } from "./components/inventory/inventory";
 
-type submitDataProps = {
-  name: string;
-  server: string;
-  region: string;
-};
-
-const App = () => {
-  const [submitData, setSubmitData] = React.useState<submitDataProps>({
-    name: "",
-    server: "",
-    region: "",
+export const App = () => {
+  const [error, setError] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [player, setPlayer] = useState({
+    username: '',
+    server: '',
+    region: ''
   });
+  const [data, setData] = useState<any[]>([{}]);
 
-  const [waitingOnResult, toggleWaitingOnResults] = React.useState<boolean>(
-    false
-  );
-
-  const [searchResults, setSearchResults] = React.useState<any[]>([]);
-
-  const [gearData, setGearData] = React.useState<any[]>([]);
-
-  React.useEffect(() => {
-    const reqURL =
-      API +
-      `parses/character/${submitData.name}/${submitData.server}/${submitData.region}?timeframe=historical&api_key=${process.env.REACT_APP_WARCRAFTLOGS_API_KEY}`;
-
-    axios
-      .get(reqURL)
-      .then((response) => {
-        let results = response.data;
-        const parsed = JSON.stringify(results);
-        console.log("results & string results:", results, parsed);
-        console.log("results:", results);
-        setSearchResults(results);
-        toggleWaitingOnResults((value) => true);
-      })
-      .catch((error) => {
-        return console.log(error);
-      });
-  }, [submitData]);
-
-  React.useEffect(() => {
-    if (searchResults.length) {
-      const reqPlayerGear = getFirstEncounterWithValidGear().gear;
-      console.log("GEARDATA:", reqPlayerGear);
-      setGearData(reqPlayerGear);
-    }
-  }, [searchResults]);
-
-  const getFirstEncounterWithValidGear = () => {
-    const result = searchResults.find((encounter) => {
-      return isValid(encounter.gear) === true;
-    });
-    return result;
+  const getInventory = (results: any[]) => {
+    return (
+      (results.find((encounter) => (encounter.gear).find((item: any) => item.name !== "Unknown Item"))).gear
+    )
   };
 
-  const isValid = (gearSet: any[]) => {
-    for (let peice of gearSet) {
-      if (peice["name"] === "Unknown Item") {
-        return false;
-      }
+  useEffect(() => {
+    const playerURL = `${player.username}/${player.server}/${player.region}`;
+    if (player.username !== "") {
+      fetch(`${WCRAFT_API_URL}parses/character/${playerURL}?timeframe=historical&api_key=${process.env.REACT_APP_WARCRAFTLOGS_API_KEY}`)
+        .then(res => res.json())
+        .then((result) => {
+          setIsLoaded(true);
+          if (!result.error) {
+            setData(getInventory(result));
+            setError(null);
+          } else {
+            throw (new Error(result.error))
+          }
+        })
+        .catch((error) => {
+          setIsLoaded(true);
+          setError(error.message);
+        })
     }
-    return true;
-  };
+  }, [player])
 
-  const handleSubmittedData = (submittedData: any) => {
-    const { name, server, region } = submittedData;
-    setSubmitData(() => {
+  const handleSearch = (playerSearch: any) => {
+    const { username, server, region } = playerSearch;
+    setPlayer(() => {
       return {
-        name: name,
+        username: username,
         server: server,
-        region: region,
+        region: region
       };
     });
-  };
+  }
 
   return (
     <div className="App">
-      <div className="searchbar">
-        <Searchbar
-          submitData={handleSubmittedData}
-          servers={placeholderData.servers}
-          regions={placeholderData.regions}
-        />
-      </div>
-
-      <div className="display-area">
-        <DisplayArea searchResults={gearData} />
+      <Header text="World of Warcraft - Classic - Armory" />
+      <Searchbar search={handleSearch} />
+      <div className="player">
+        {(isLoaded && error) ? (
+          <span>{JSON.stringify(error)}</span>
+        ) : (isLoaded && !error) ? (
+          <div className="player-inventory">
+            <h1>{player.username}</h1>
+            <h4>{`${player.server}/${player.region}`}</h4>
+            <Inventory
+              items={data}
+            />
+          </div>
+        ) : (
+          <span>input info to search for player</span>
+        )}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default App;
+

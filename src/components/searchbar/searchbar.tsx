@@ -1,119 +1,76 @@
 import React from "react";
 import Form from "react-bootstrap/Form";
+import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
+import './searchbar.css';
+import { servers, regions } from "../../placeholders";
 
 type SearchbarProps = {
-  regions: string[];
-  servers: string[];
-  submitData: (data: any) => void;
+  search: (data: any) => void;
 };
+
+interface Region {
+  [region: string]: string[];
+}
 
 export const Searchbar: React.FC<SearchbarProps> = (props) => {
   const [regionInput, setRegionInput] = React.useState("");
   const [nameInput, setNameInput] = React.useState("");
   const [serverInput, setServerInput] = React.useState("");
 
-  const getCheckCase = () => {
-    return regionInput && nameInput && serverInput
-      ? 6
-      : regionInput && nameInput
-      ? 5
-      : regionInput && serverInput
-      ? 4
-      : regionInput
-      ? 3
-      : serverInput
-      ? 2
-      : nameInput
-      ? 1
-      : 0;
-  };
 
-  const validateSubmit = () => {
-    let caseNumber = getCheckCase();
-    let result;
+  const handleSubmit = (event: any) => {
+    if (regionInput.length && nameInput.length && serverInput.length) {
+      const playerData = {
+        username: nameInput,
+        server: serverInput,
+        region: regionInput
+      };
+      props.search(playerData);
 
-    switch (caseNumber) {
-      case 6:
-        result = "valid";
-        break;
-      case 5:
-        result = "missing server input";
-        break;
-      case 4:
-        result = "missing name input";
-        break;
-      case 3:
-        result = "missing server and name input";
-        break;
-      case 2:
-        result = "missing region and name input";
-        break;
-      case 1:
-        result = "missing region and server input";
-        break;
-      case 0:
-        result = "missing all input fields";
+    } else {
+      return console.log("failed");
     }
-    return result;
-  };
-
-  const handleSubmitClick = () => {
-    const result = validateSubmit();
-
-    return (result === "valid" ? props.submitData(
-      {
-          region: regionInput,
-          name: nameInput,
-          server: serverInput,
-      }
-    ) : (
-      console.log(result)
-    )
-    )};
+  }
 
   return (
-    <div className="searchbar">
-      <Form>
-        <Form.Row>
-          <div className="col-lg-2" test-data="input-01">
-            <Form.Control
-              size="lg"
-              onChange={(e) => setNameInput(e.target.value)}
-              placeholder="Character name"
-            />
-          </div>
-          <div className="col-lg-2" test-data="input-02">
-            <Form.Control
-              as="select"
-              onChange={(e) => setServerInput(e.target.value)}
-              size="lg"
-            >
-              <option key="server-label">Server</option>
-              {props.servers.map((server, idx) => (
-                <option key={idx}>{server}</option>
-              ))}
-            </Form.Control>
-          </div>
-          <div className="col-lg-.4" test-data="input-03">
-            <Form.Control
-              as="select"
-              onChange={(e) => setRegionInput(e.target.value)}
-              size="lg"
-            >
-              <option key="region-label">Region</option>
-              {props.regions.map((region, idx) => (
-                <option key={idx}>{region}</option>
-              ))}
-            </Form.Control>
-          </div>
-          <Button size="lg" onClick={handleSubmitClick} variant="outline-primary">
-            Submit
-          </Button>
-        </Form.Row>
-      </Form>
-    </div>
+    <Form.Row>
+      <Col>
+        <Form.Control
+          size="lg"
+          onChange={(e) => setNameInput(e.target.value)}
+          placeholder="Character name"
+        />
+      </Col>
+      <Col>
+        <Form.Control
+          size="lg"
+          as="select"
+          onChange={e => setRegionInput(e.target.value)}
+        >
+          <option key={"region"}>region</option>
+          {regions.map((region, idx) => <option key={`region-${idx}`}>{region}</option>)}
+        </Form.Control>
+      </Col>
+      {regionInput && (
+        <Col>
+          <Form.Control
+            size="lg"
+            as="select"
+            onChange={e => setServerInput(e.target.value)}
+          >
+            <option key={"server"}>server</option>
+            {servers[regionInput].map((server, idx) => <option key={`server-${idx}`}>{server}</option>)}
+          </Form.Control>
+        </Col>
+      )}
+      <Col>
+        <Button size="lg" onClick={handleSubmit} variant="outline-primary" >
+          Submit
+            </Button>
+      </Col>
+    </Form.Row>
   );
 };
 
-export default Searchbar;
+
