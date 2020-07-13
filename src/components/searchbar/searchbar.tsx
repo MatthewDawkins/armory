@@ -27,49 +27,47 @@ export const Searchbar: React.FC<SearchbarProps> = (props) => {
         region: regionInput
       };
       props.search(playerData);
-
     } else {
       return console.log("failed");
     }
   }
 
   return (
-    <Form.Row>
-      <Col>
-        <Form.Control
-          size="lg"
-          onChange={(e) => setNameInput(e.target.value)}
-          placeholder="Character name"
-        />
-      </Col>
-      <Col>
-        <Form.Control
-          size="lg"
-          as="select"
-          onChange={e => setRegionInput(e.target.value)}
-        >
-          <option key={"region"}>region</option>
-          {regions.map((region, idx) => <option key={`region-${idx}`}>{region}</option>)}
-        </Form.Control>
-      </Col>
-      {regionInput && (
+    <div className="searchbar">
+      <Form.Row>
+        <Col>
+          <Form.Control
+            size="lg"
+            onChange={(e) => setNameInput(e.target.value)}
+            placeholder="username"
+          />
+        </Col>
+        <Col>
+          <Form.Control
+            size="lg"
+            as="select"
+            onChange={e => setRegionInput(e.target.value)}
+          >
+            <option key={"region"}>region</option>
+            {regions.map((region, idx) => <option key={`region-${idx}`}>{region}</option>)}
+          </Form.Control>
+        </Col>
         <Col>
           <Form.Control
             size="lg"
             as="select"
             onChange={e => setServerInput(e.target.value)}
           >
-            <option key={"server"}>server</option>
-            {servers[regionInput].map((server, idx) => <option key={`server-${idx}`}>{server}</option>)}
+            <option key={"server"}>{regionInput ? "server" : "..."}</option>
+            {regionInput && (servers[regionInput].map((server, idx) => <option key={`server-${idx}`}>{server}</option>))}
           </Form.Control>
         </Col>
-      )}
-      <Col>
         <Button size="lg" onClick={handleSubmit} variant="outline-primary" >
           Submit
             </Button>
-      </Col>
-    </Form.Row>
+
+      </Form.Row>
+    </div>
   );
 };
 

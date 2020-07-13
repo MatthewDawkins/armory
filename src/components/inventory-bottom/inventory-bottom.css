@@ -1,0 +1,28 @@
+.inventory-bottom  {
+  display: flex;
+  text-align: center;
+  justify-content: space-between;
+  width: 60%;
+  margin: 5px auto 5px auto;
+  padding-top: 5px;
+}
+
+.inventory-bottom .bottom-label img {
+  padding: 5px;
+}
+.inventory-bottom .bottom-label {
+
+  font-family: 'Open Sans', sans-serif;
+  font-size: 10px;
+  white-space: normal;
+}
+
+
+
+
+
+
+
+
+
+

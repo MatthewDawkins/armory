@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react";
 import { Searchbar } from './components/searchbar/searchbar';
 import { WCRAFT_API_URL } from './placeholders';
 import { Header } from './components/header/header';
-import { Inventory } from "./components/inventory/inventory";
+import { Player } from './components/player/player';
+import "./App.css";
+
 
 export const App = () => {
   const [error, setError] = useState(null);
@@ -10,13 +12,24 @@ export const App = () => {
   const [player, setPlayer] = useState({
     username: '',
     server: '',
-    region: ''
+    region: '',
   });
-  const [data, setData] = useState<any[]>([{}]);
+
+
+  const [playerResults, setPlayerResults] = useState<any[]>([{}]);
 
   const getInventory = (results: any[]) => {
-    return (
-      (results.find((encounter) => (encounter.gear).find((item: any) => item.name !== "Unknown Item"))).gear
+
+    const result = results.find((encounter) => (encounter.gear).find((item: any) => item.name !== "Unknown Item"));
+
+
+    return ([{
+      items: result.gear,
+      class: result.class,
+      spec: result.spec,
+      percentile: result.percentile
+    }]
+
     )
   };
 
@@ -28,7 +41,12 @@ export const App = () => {
         .then((result) => {
           setIsLoaded(true);
           if (!result.error) {
-            setData(getInventory(result));
+
+            setPlayerResults(getInventory(result));
+            console.log("inventory:", getInventory(result))
+
+
+
             setError(null);
           } else {
             throw (new Error(result.error))
@@ -54,25 +72,38 @@ export const App = () => {
 
   return (
     <div className="App">
-      <Header text="World of Warcraft - Classic - Armory" />
+      <Header text="Classic Wow Armory" />
       <Searchbar search={handleSearch} />
-      <div className="player">
+      <div className="main-container">
+
+
+
         {(isLoaded && error) ? (
           <span>{JSON.stringify(error)}</span>
         ) : (isLoaded && !error) ? (
-          <div className="player-inventory">
-            <h1>{player.username}</h1>
-            <h4>{`${player.server}/${player.region}`}</h4>
-            <Inventory
-              items={data}
+          playerResults.map(result => (
+
+            <Player
+              name={player.username}
+              server={player.server}
+              items={result.items}
+              class={result.class}
+              spec={result.spec}
+              percentile={result.percentile}
             />
-          </div>
-        ) : (
-          <span>input info to search for player</span>
-        )}
+
+          ))) : (
+              <span>input info to search for player</span>
+            )}
+
       </div>
+      <footer>Wow Armory</footer>
     </div>
-  )
+
+
+
+
+  );
 }
 
 
