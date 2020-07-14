@@ -22,6 +22,7 @@
 
 .row {
   width: 60%;
+  min-width: 300px;
   position: relative;
   margin-right: auto;
   margin-left: auto;

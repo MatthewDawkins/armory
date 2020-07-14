@@ -73,6 +73,11 @@
 
 }
 
+.player-info {
+  text-align: right;
+  margin: 10px;
+}
+
 .player-header h1 {
  font-size: 33px;
  padding: 10px;
