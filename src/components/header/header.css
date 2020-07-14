@@ -1,0 +1,45 @@
+.App-header {
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
+  flex-direction: column;
+  text-align: center;
+  height: 100%;
+  padding-top: 10px;
+
+
+}
+
+.App-header h1 {
+  font-size: 50px;
+}
+
+.App-header img {
+  max-width: 100px;
+  height: auto;
+  align-self: center;
+}
+
+
+@media screen and (max-width: 992px) {
+  .App-header {
+    font-size: 20px;
+
+  }
+
+.App-header img {
+  width: 50px;
+}
+
+}
+
+@media screen and (max-width: 600px) {
+  .App-header h1 {
+    font-size: 15px;
+  }
+
+
+.App-header img {
+  width: 30px;
+}
+}

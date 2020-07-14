@@ -51,3 +51,26 @@ export const regions = [
   "US",
   "OC"
 ];
+
+
+export const itemSlots = [
+    "head",
+    "neck",
+    "shoulder",
+    "shirt",
+    "chest",
+    "waist",
+    "legs",
+    "feet",
+    "wrists",
+    "hands",
+    "finger",
+    "finger",
+    "trinket",
+    "trinket",
+    "chest",
+    "mainhand",
+    "offhand",
+    "ranged",
+    "tabard"
+  ];
