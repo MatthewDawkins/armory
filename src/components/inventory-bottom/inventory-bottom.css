@@ -1,20 +1,28 @@
 .inventory-bottom  {
   display: flex;
-  text-align: center;
-  align-self: center;
-  justify-content: space-between;
-  width: 70%;
+  justify-content: center;
+  width: 60%;
   margin: 5px auto 5px auto;
-  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
 
 .inventory-bottom .bottom-label {
-
+  text-align: center;
   font-family: 'Open Sans', sans-serif;
-  font-size: 10px;
+  font-size: 12px;
   white-space: normal;
-  width: 66px;
+  width: 70px;
+}
+
+
+#item-quality-undefined {
+  color: darkgrey;
+}
+
+.bottom-label i {
+  color: grey;
+  font-size: 10px;
 }
 
 

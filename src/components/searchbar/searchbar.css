@@ -1,34 +1,31 @@
 
 .searchbar {
-  justify-content: center;
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  overflow: hidden;
   min-height: 35px;
-  align-items: center;
   padding: 3px;
   position: relative;
+  display: inline-flex;
+  justify-content: center;
 
+  width: 100%;
+}
 
+.input-group .form-control {
+  color: grey;
+}
+
+.btn-primary.btn-lg {
+  color: white;
+  background-color: #0382C1;
 
 }
 
-.btn {
-  color: lightgrey;
+.btn-primary.btn-lg:hover {
+  background-color: darkblue;
 }
 
-.searchbar .form-row  {
+.searchbar .input-group  {
   width: 90%;
   max-width: 800px;
-
-
-
 }
 
-
-.searchbar div .col {
-  padding: 0;
-
-}
 

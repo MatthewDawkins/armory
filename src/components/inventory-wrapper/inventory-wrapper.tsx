@@ -19,7 +19,7 @@ export const InventoryWrapper: React.FC<InventoryProps> = (props: InventoryProps
         <div className="col-lg-6 col-xs-12">
           <InventorySide
             items={slotLeftIDs.map(id => props.items[id - 1] || {
-              name: `emptyslot-${itemSlots[id - 1]}`,
+              name: `Empty slot - ${itemSlots[id - 1]}`,
               icon: `inventoryslot_${itemSlots[id - 1]}.jpg`
             })}
             side={"left"}
@@ -28,7 +28,7 @@ export const InventoryWrapper: React.FC<InventoryProps> = (props: InventoryProps
         <div className="col-lg-6 col-xs-12">
           <InventorySide
             items={slotRightIDs.map(id => props.items[id - 1] || {
-              name: `emptyslot-${itemSlots[id - 1]}`,
+              name: `Empty slot - ${itemSlots[id - 1]}`,
               icon: `inventoryslot_${itemSlots[id - 1]}.jpg`
             })}
             side={"right"}
@@ -36,7 +36,7 @@ export const InventoryWrapper: React.FC<InventoryProps> = (props: InventoryProps
         </div>
         <InventoryBottom
           items={slotBottomIDs.map(id => props.items[id - 1] || {
-            name: `emptyslot-${itemSlots[id - 1]}`,
+            name: `Empty slot - ${itemSlots[id - 1]}`,
             icon: `inventoryslot_${itemSlots[id - 1]}.jpg`
           })}
         />

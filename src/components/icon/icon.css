@@ -4,15 +4,14 @@
   width: 64x;
   padding: 2px;
 
+}
 
+.icon {
+
+  padding: 10px;
 }
 
 .icon-img {
-
-  height: 98%;
-  width: 98%;
   margin: 1px;
   padding: 3px;
-
-
 }

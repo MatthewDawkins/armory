@@ -74,3 +74,5 @@ export const itemSlots = [
     "ranged",
     "tabard"
   ];
+
+

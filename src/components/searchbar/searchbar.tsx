@@ -1,7 +1,8 @@
 import React from "react";
-import Form from "react-bootstrap/Form";
-import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
+import InputGroup from 'react-bootstrap/InputGroup';
+import FormControl from 'react-bootstrap/FormControl';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 import './searchbar.css';
 import { servers, regions } from "../../placeholders";
 
@@ -32,43 +33,61 @@ export const Searchbar: React.FC<SearchbarProps> = (props) => {
     }
   }
 
+  const handleSubmitEnter = (e:any) => {
+
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleSubmit(e);
+    }
+    console.log(e.target.value);
+  }
+
+
+
   return (
     <div className="searchbar">
-      <Form.Row>
-        <Col>
-          <Form.Control
-            size="lg"
-            onChange={(e) => setNameInput(e.target.value)}
-            placeholder="username"
-          />
-        </Col>
-        <Col>
-          <Form.Control
-            size="lg"
-            as="select"
-            onChange={e => setRegionInput(e.target.value)}
-          >
-            <option key={"region"}>region</option>
-            {regions.map((region, idx) => <option key={`region-${idx}`}>{region}</option>)}
-          </Form.Control>
-        </Col>
-        <Col>
-          <Form.Control
-            size="lg"
-            as="select"
-            onChange={e => setServerInput(e.target.value)}
-          >
-            <option key={"server"}>{regionInput ? "server" : "..."}</option>
-            {regionInput && (servers[regionInput].map((server, idx) => <option key={`server-${idx}`}>{server}</option>))}
-          </Form.Control>
-        </Col>
-        <Button size="lg" onClick={handleSubmit} variant="outline-primary" >
-          Submit
-            </Button>
+      <InputGroup onKeyPress={(e:any) => handleSubmitEnter(e)}>
+        <FormControl
+          size="lg"
+          placeholder="Username"
+          aria-label="Username"
+          aria-describedby="basic-addon2"
+          onChange={e => setNameInput(e.target.value)}
+        />
+        <Form.Control
+          size="lg"
+          as="select"
+          onChange={e => e && setRegionInput(e.target.value)}
 
-      </Form.Row>
+        >
+          <option key={"region"}>Region</option>
+          {regions.map((region, idx) => <option key={`region-${idx}`}>{region}</option>)}
+        </Form.Control>
+
+        <Form.Control
+          size="lg"
+          as="select"
+          onChange={e => e && setServerInput(e.target.value)}
+
+        >
+          <option key={"server"}>{regionInput ? "Server" : "..."}</option>
+          {regionInput ? (servers[regionInput].map((server, idx) => <option key={`server-${idx}`}>{server}</option>) ): (
+            (servers["US"].concat(servers["EU"]).concat(servers["OC"]).map((server, idx) => <option key={`server-${idx}`}>{server}</option>)
+
+
+          ))}
+        </Form.Control>
+          <InputGroup.Append>
+      <Button size="lg" variant="primary" onClick={handleSubmit}>Submit</Button>
+      </InputGroup.Append>
+
+
+
+      </InputGroup>
     </div>
   );
+
 };
+
 
 

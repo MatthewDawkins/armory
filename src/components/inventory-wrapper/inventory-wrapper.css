@@ -5,12 +5,8 @@
   display: flex;
   position: relative;
   justify-content: center;
-  align-items: center;
-  height: 100%;
   background-color: rgba(0,0,0,0.8);
-  padding: 20px 5px 20px 5px;
-
-
+  padding: 3vw 5px 0 5px;
 }
 
 
@@ -21,7 +17,7 @@
 }
 
 .row {
-  width: 60%;
+  width: 65%;
   min-width: 300px;
   position: relative;
   margin-right: auto;
