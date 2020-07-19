@@ -1,0 +1,65 @@
+.player-sidebar {
+  width: 20%;
+  margin-right: 20px;
+  display: flex;
+  padding-top: 38px;
+  height: auto;
+  flex-direction: column;
+  color: white;
+  padding-bottom: 20px;
+}
+
+.player-sidebar .btn.btn-primary img {
+  width: 17px;
+  margin: 2px;
+}
+
+.player-sidebar .btn.btn-primary {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  font-size: 11px;
+  background: grey;
+}
+
+.stats {
+  outline: red 1px solid;
+  height: 27%;
+  min-height: 150px;
+  min-width: 70%;
+}
+.info {
+  outline: olivedrab 1px solid;
+  height: 10%;
+  margin-top: 7px;
+  min-width: 30%;
+  min-height: 150px;
+}
+
+@media screen and (max-width: 992px) {
+  .inventory-wrapper .player-sidebar {
+    width: 80%;
+    justify-content: center;
+
+    display: flex;
+    flex-direction: row;
+  }
+  .inventory-wrapper .player-sidebar .info {
+    margin-top: 0;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .inventory-wrapper .player-sidebar {
+    width: 100%;
+    justify-content: center;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+  }
+  .inventory-wrapper .player-sidebar .info {
+    margin-top: 0;
+    min-height: 100px;
+
+  }
+}

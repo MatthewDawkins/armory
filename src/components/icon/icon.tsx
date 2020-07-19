@@ -6,15 +6,12 @@ type IconProps = {
   id: number;
 };
 
-
 export const Icon: React.FC<IconProps> = (props: IconProps) => (
 
-  <a className="icon" href={`https://classic.wowhead.com/item=${props.id}`}>
-
-      <div className="icon-wrapper">
+  <a className="icon" target="_blank" rel="noopener noreferrer" href={`https://classic.wowhead.com/item=${props.id}`}>
+    <div className="icon-wrapper">
       <img className="icon-img" src={`https://wow.zamimg.com/images/wow/icons/large/${props.img}`} alt="icon-img" />
-      </div>
-
+    </div>
   </a>
-);
 
+);

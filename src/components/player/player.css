@@ -2,8 +2,17 @@
   position:relative;
   display: flex;
   justify-content: center;
-  padding-top: 30px;
+  padding-top: 1.5vw;
   width:100%;
+  min-width: fit-content;
+}
+
+
+
+#player-area {
+  width: 60%;
+  max-width: 1000px;
+  min-width: 320px;
 }
 
 .player-area-rogue {
@@ -86,7 +95,9 @@
 .class-icon {
   clip-path: circle(50% at 50% 50%);
   text-align: center;
+  width: 60px;
   margin: 5px;
+
 }
 
 .player-class-Druid {

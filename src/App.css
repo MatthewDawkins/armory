@@ -1,7 +1,7 @@
 
 
 h1, h3, h4, h5 {
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: "Source Sans Pro", sans-serif;
   font-weight: 700;
   color: rgb(236, 229, 224);
 }
@@ -11,7 +11,7 @@ h1, h3, h4, h5 {
 }
 
 .welcome-message {
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: "Source Sans Pro", sans-serif;
   font-weight: 300;
   color: rgb(236, 229, 224, 0.4);
 }
@@ -32,7 +32,7 @@ p {
 }
 .App {
   margin-top: 0;
-  min-height: 100%;
+  min-height:100%;
   width: 100%;
   padding-bottom: 7vw;
   padding-top: 20px;

@@ -1,6 +1,7 @@
 .inventory-bottom  {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  min-width: 300px;
   width: 60%;
   margin: 5px auto 5px auto;
   padding-bottom: 5px;
@@ -9,7 +10,7 @@
 
 .inventory-bottom .bottom-label {
   text-align: center;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 12px;
   white-space: normal;
   width: 70px;

@@ -3,19 +3,24 @@
   min-height: 35px;
   padding: 3px;
   position: relative;
-  display: inline-flex;
+  display: flex;
   justify-content: center;
-
+  align-items: center;
+  flex-direction: column;
   width: 100%;
+  max-width: 800px;
 }
 
 .input-group .form-control {
   color: grey;
 }
 
+
+
 .btn-primary.btn-lg {
-  color: white;
+  color: rgb(236, 229, 224);
   background-color: #0382C1;
+
 
 }
 
@@ -23,8 +28,10 @@
   background-color: darkblue;
 }
 
+.searchbar
+
 .searchbar .input-group  {
-  width: 90%;
+  width: 100%;
   max-width: 800px;
 }
 

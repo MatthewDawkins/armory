@@ -4,7 +4,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-
+  min-width: 215px;
   position: relative;
 
 }
@@ -15,7 +15,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-width: 200px;
+  min-width: 215px;
   font-size: 15px;
   position: relative;
   padding-bottom: 5px;
@@ -52,20 +52,15 @@
 @media screen and (max-width: 992px) {
   .inventory .inventory-right .right-label {
     flex-direction: row;
+    text-align: left;
   }
   .inventory .inventory-right {
     align-items: flex-start;
-  }
-}
-
-
-@media screen and (max-width: 992px) {
-  .inventory .inventory-right .right-label {
-    flex-direction: row;
     text-align: left;
-    align-items: flex-start;
   }
 }
+
+
 
 #item-quality-undefined {
   color: darkgrey;

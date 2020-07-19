@@ -1,23 +1,51 @@
+.inventory-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  background-color: rgba(0,0,0,0.8);
+  flex-direction: row;
+  width: 100%;
 
+}
 
 .inventory {
-  width: 100%;
+  align-items: center;
+
   display: flex;
   position: relative;
-  justify-content: center;
-  background-color: rgba(0,0,0,0.8);
-  padding: 3vw 5px 0 5px;
-}
 
+
+  width: 58%;
+
+  padding: 1.5vw 5px 0 5px;
+}
+@media screen and (max-width: 992px) {
+  .inventory-wrapper {
+    flex-direction: column;
+    width: 100%;
+    justify-content: flex-start;
+  }
+  .inventory {
+    width: 100%;
+  }
+
+}
 
 @media screen and (max-width: 600px) {
-  .inventory .row {
+  .inventory-wrapper{
+    flex-direction: column;
+    width: 100%;
+  }
+  .inventory {
     width: 90%;
   }
+  .inventory .row {
+    width: 80%;
+  }
+
 }
 
-.row {
-  width: 65%;
+.row{
+
   min-width: 300px;
   position: relative;
   margin-right: auto;

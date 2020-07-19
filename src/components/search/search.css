@@ -1,0 +1,32 @@
+.search {
+  color: grey;
+  font-size: 12px;
+  margin-top: 4px;
+  width: 100%;
+  max-width: 800px;
+  cursor: pointer;
+}
+
+.search:hover {
+  background-color: rgb(255,255,255, 0.2);
+  color: black;
+}
+
+.search:hover i {
+
+  color: black;
+}
+.search i {
+  margin: 4px;
+  padding-left: 10px;
+  padding-right: 10px;
+  color: grey;
+}
+
+.search i:hover {
+  color: rgb(210, 217, 224);
+}
+
+.search {
+  display: flex;
+}

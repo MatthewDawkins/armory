@@ -1,20 +1,20 @@
 export const WCRAFT_API_URL = "https://classic.warcraftlogs.com/v1/";
 
-export const servers:{[key: string]: string[]} = {
+export const servers: { [key: string]: string[] } = {
   EU: [
-    'Amnennar', 'Ashbringer',
-    'Bloodfang', "Dragon's Call",
-    'Dreadmist', 'Finkle',
-    'Flamegor', 'Flamelash',
-    'Gandling', 'Gehennas',
-    'Golemagg', 'Judgement',
-    'Lucifron', 'Mograine',
-    'Noggenfogger', 'Patchwerk',
-    'Razorgore', "Rhok'delar",
-    'Shazzrah', 'Skullflame',
-    'Stonespine', 'Sulfuron',
-    'Ten Storms', 'Transcendence',
-    'Venoxis', 'Wyrmthalak'
+    "Amnennar", "Ashbringer",
+    "Bloodfang", "Dragon's Call",
+    "Dreadmist", "Finkle",
+    "Flamegor", "Flamelash",
+    "Gandling", "Gehennas",
+    "Golemagg", "Judgement",
+    "Lucifron", "Mograine",
+    "Noggenfogger", "Patchwerk",
+    "Razorgore", "Rhok'delar",
+    "Shazzrah", "Skullflame",
+    "Stonespine", "Sulfuron",
+    "Ten Storms", "Transcendence",
+    "Venoxis", "Wyrmthalak"
   ],
   US: [
     "Anathema",
@@ -36,7 +36,7 @@ export const servers:{[key: string]: string[]} = {
     "Sulfuras",
     "Thalnos",
     "Thunderfury",
-    "Whitemane"
+    "Whitemane",
   ],
   OC: [
     "Arugal",
@@ -54,25 +54,25 @@ export const regions = [
 
 
 export const itemSlots = [
-    "head",
-    "neck",
-    "shoulder",
-    "shirt",
-    "chest",
-    "waist",
-    "legs",
-    "feet",
-    "wrists",
-    "hands",
-    "finger",
-    "finger",
-    "trinket",
-    "trinket",
-    "chest",
-    "mainhand",
-    "offhand",
-    "ranged",
-    "tabard"
-  ];
+  "head",
+  "neck",
+  "shoulder",
+  "shirt",
+  "chest",
+  "waist",
+  "legs",
+  "feet",
+  "wrists",
+  "hands",
+  "finger",
+  "finger",
+  "trinket",
+  "trinket",
+  "chest",
+  "mainhand",
+  "offhand",
+  "ranged",
+  "tabard"
+];
 
 
