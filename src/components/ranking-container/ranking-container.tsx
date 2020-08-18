@@ -99,7 +99,7 @@ export const RankingContainer: React.FC<RankingContainerProps> = (props) => {
           {`${ranking}`}
         </h5>
       ) : (
-        error && <h5 className="error-ranking">N/A</h5>
+        error && <h5 className="error-ranking">{"> 500"}</h5>
       )}
     </div>
   );
