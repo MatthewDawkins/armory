@@ -38,8 +38,7 @@ export const Searchbar: React.FC<SearchbarProps> = (props) => {
   const handleSubmit = (e: any) => {
     e.preventDefault();
     if (regionInput.length && nameInput.length && serverInput.length) {
-      console.log(`${nameInput}/${serverInput}/${regionInput}`);
-      props.search(`${formatName(nameInput)}/${serverInput}/${regionInput}`);
+      props.search(`${formatName(nameInput)}/${serverInput.split(" ").join("-")}/${regionInput}`);
     } else {
       return console.log("failed");
     }

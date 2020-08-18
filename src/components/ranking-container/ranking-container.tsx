@@ -26,7 +26,7 @@ export const RankingContainer: React.FC<RankingContainerProps> = (props) => {
     let hasMorePages = true;
     setLoading(true);
 
-    const doParsesFetch = async () => {
+    const doRankingsFetch = async () => {
       var pageCount = 1;
       while (hasMorePages && ranking === -1) {
         try {
@@ -53,7 +53,7 @@ export const RankingContainer: React.FC<RankingContainerProps> = (props) => {
     };
 
     if (name) {
-      doParsesFetch();
+      doRankingsFetch();
     }
   }, [
     name,
@@ -96,10 +96,10 @@ export const RankingContainer: React.FC<RankingContainerProps> = (props) => {
               alt="ranking-medal"
             />
           )}
-          {`${ranking}`}
+          {ranking}
         </h5>
       ) : (
-        error && <h5 className="error-ranking">N/A</h5>
+         <h5 className="error-ranking">{">500"}</h5>
       )}
     </div>
   );
