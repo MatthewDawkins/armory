@@ -1,74 +1,120 @@
-import React from "react";
-import Form from "react-bootstrap/Form";
-import Col from "react-bootstrap/Col";
+import React, { useRef } from "react";
+import { SearchHistory } from "../search-history/search-history";
+import InputGroup from "react-bootstrap/InputGroup";
+import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
-import './searchbar.css';
-import { servers, regions } from "../../placeholders";
+import "./searchbar.scss";
 
 type SearchbarProps = {
-  search: (data: any) => void;
+  search: (data: string) => void;
+  delete: (data: string) => void;
+  prevSearches: any[];
 };
 
-interface Region {
-  [region: string]: string[];
-}
+const serversByRegion = require("../../libs/servers.json");
 
 export const Searchbar: React.FC<SearchbarProps> = (props) => {
-  const [regionInput, setRegionInput] = React.useState("");
   const [nameInput, setNameInput] = React.useState("");
-  const [serverInput, setServerInput] = React.useState("");
+  const [serverInput, setServerInput] = React.useState("Server");
+  const [regionInput, setRegionInput] = React.useState("Region");
+  const [isOpen, setIsOpen] = React.useState(false);
 
+  const node = useRef<HTMLHeadingElement>(null);
 
-  const handleSubmit = (event: any) => {
+  React.useEffect(() => {
+    document.addEventListener("mousedown", handleClick);
+    return () => {
+      document.removeEventListener("mousedown", handleClick);
+    };
+  }, []);
+
+  const handleClick = (e: any) => {
+    if (node.current && node.current.contains(e.target)) {
+      return;
+    }
+    setIsOpen(false);
+  };
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
     if (regionInput.length && nameInput.length && serverInput.length) {
-      const playerData = {
-        username: nameInput,
-        server: serverInput,
-        region: regionInput
-      };
-      props.search(playerData);
+      console.log(`${nameInput}/${serverInput}/${regionInput}`);
+      props.search(`${formatName(nameInput)}/${serverInput}/${regionInput}`);
     } else {
       return console.log("failed");
     }
-  }
+    setIsOpen(false);
+  };
+
+  const handleSubmitEnter = (e: any) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleSubmit(e);
+    }
+    return;
+  };
+
+  const formatName = (name: string): string => {
+    return (
+      name.charAt(0).toUpperCase() + name.slice(1, name.length).toLowerCase()
+    );
+  };
 
   return (
-    <div className="searchbar">
-      <Form.Row>
-        <Col>
-          <Form.Control
-            size="lg"
-            onChange={(e) => setNameInput(e.target.value)}
-            placeholder="username"
-          />
-        </Col>
-        <Col>
-          <Form.Control
-            size="lg"
-            as="select"
-            onChange={e => setRegionInput(e.target.value)}
-          >
-            <option key={"region"}>region</option>
-            {regions.map((region, idx) => <option key={`region-${idx}`}>{region}</option>)}
-          </Form.Control>
-        </Col>
-        <Col>
-          <Form.Control
-            size="lg"
-            as="select"
-            onChange={e => setServerInput(e.target.value)}
-          >
-            <option key={"server"}>{regionInput ? "server" : "..."}</option>
-            {regionInput && (servers[regionInput].map((server, idx) => <option key={`server-${idx}`}>{server}</option>))}
-          </Form.Control>
-        </Col>
-        <Button size="lg" onClick={handleSubmit} variant="outline-primary" >
-          Submit
-            </Button>
-
-      </Form.Row>
+    <div className="searchbar" ref={node} onClick={(e) => setIsOpen(!isOpen)}>
+      <InputGroup onKeyPress={(e: any) => handleSubmitEnter(e)}>
+        <FormControl
+          size="sm"
+          placeholder="Username"
+          aria-label="Username"
+          aria-describedby="basic-addon2"
+          value={nameInput}
+          onChange={(e) => setNameInput(e.target.value)}
+        />
+        <FormControl
+          size="sm"
+          as="select"
+          value={regionInput}
+          onChange={(e) => e && setRegionInput(e.target.value)}
+        >
+          <option value="" key="default-region">
+            Region
+          </option>
+          {Object.keys(serversByRegion).map((region: string, idx: number) => (
+            <option value={region} key={`region-${idx}`}>
+              {region}
+            </option>
+          ))}
+        </FormControl>
+        <FormControl
+          size="sm"
+          as="select"
+          value={serverInput}
+          onChange={(e) => e && setServerInput(e.target.value)}
+        >
+          <option value="" key="default-server">
+            Server
+          </option>
+          {regionInput !== "Region" &&
+            serversByRegion[regionInput].map((server: string, idx: number) => (
+              <option value={server} key={`server-${idx}`}>
+                {server}
+              </option>
+            ))}
+        </FormControl>
+        <InputGroup.Append>
+          <Button variant="primary" size="sm" onClick={handleSubmit}>
+            Submit
+          </Button>
+        </InputGroup.Append>
+      </InputGroup>
+      {isOpen && (
+        <SearchHistory
+          delete={props.delete}
+          search={props.search}
+          searchedPlayers={props.prevSearches}
+        />
+      )}
     </div>
   );
 };
-
-

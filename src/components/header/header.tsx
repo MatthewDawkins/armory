@@ -1,16 +1,17 @@
 import React from "react";
-import "./header.css";
-
+import "./header.scss";
 
 type HeaderProps = {
   text: string;
-}
-
-export const Header:React.FC<HeaderProps> = props => {
-  return (
-    <header className="App-header">
-      <img className="logo" src={'./images/icon-logo.png'} alt="Classic"/>
-      <h1>{props.text}</h1>
-    </header>
-  );
 };
+
+export const Header: React.FC<HeaderProps> = ({ text }) => (
+  <header className="header">
+    <img
+      className="logo"
+      src="./images/icon-logo.png"
+      alt="class-wow-armory-logo"
+    />
+    <h1>{text}</h1>
+  </header>
+);

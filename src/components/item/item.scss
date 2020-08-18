@@ -1,0 +1,18 @@
+.item-wrapper {
+  display: flex;
+  align-items: center;
+  height: 64px;
+  width: 64x;
+  padding: 2px;
+  z-index: 1000;
+}
+
+.item {
+  padding: 10px;
+}
+
+.item-img {
+  margin-left: -62px;
+  width: 56px;
+  z-index: 1;
+}

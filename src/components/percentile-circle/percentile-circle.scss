@@ -1,0 +1,63 @@
+.circle-chart-wrapper {
+  display: flex;
+  flex-direction: column;
+  max-height: 95px;
+  max-width: 95px;
+  min-height: 80px;
+  min-width: 80px;
+}
+
+#circular-chart {
+  display: block;
+  width: 100%;
+  margin: 5px;
+}
+
+.circle-bg {
+  fill: none;
+  stroke-width: 3.8;
+}
+
+.circle {
+  fill: none;
+  stroke-width: 2.4;
+  stroke-linecap: butt;
+  animation: progress 1s ease-out forwards;
+}
+
+@keyframes progress {
+  0% {
+    stroke-dasharray: 0 100;
+  }
+}
+
+.circular-chart-legendary .circle {
+  stroke: #ff8000;
+}
+
+.circular-chart-epic .circle {
+  stroke: #a335ee;
+}
+
+.circular-chart-rare .circle {
+  stroke: #0070dd;
+}
+
+.circular-chart-uncommon .circle {
+  stroke: #1eff00;
+}
+
+.circular-chart-common .circle {
+  stroke: #ffffff;
+}
+
+.circular-chart-poor .circle {
+  stroke: #9d9d9d;
+}
+
+.percentage {
+  fill: rgb(241, 236, 236);
+  font-family: sans-serif;
+  font-size: 0.4em;
+  text-anchor: middle;
+}

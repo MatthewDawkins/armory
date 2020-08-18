@@ -1,0 +1,33 @@
+.searchbar {
+  min-height: 35px;
+  opacity: 97%;
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  flex-direction: column;
+  min-width: 600px;
+  width: 40%;
+  max-width: 640px;
+  z-index: 999;
+}
+
+@media screen and (max-width: 600px) {
+  .searchbar {
+    min-width: 90vw;
+  }
+}
+
+.input-group .form-control {
+  color: grey;
+}
+
+.btn-primary {
+  color: rgb(236, 229, 224);
+  background-color: #0382c1;
+  border-color: #0382c1;
+}
+
+.btn-primary:hover {
+  background-color: darkblue;
+  border-color: darkblue;
+}

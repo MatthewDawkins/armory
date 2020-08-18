@@ -1,90 +1,54 @@
-
-
 .inventory-right {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-
+  min-width: 215px;
   position: relative;
-
 }
-
-
 
 .inventory-left {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  width: 100%;
+  justify-content: center;
+  min-width: 215px;
 
   position: relative;
   padding-bottom: 5px;
+}
 
+.label-title {
+  margin-top: 15px;
+  font-size: 18px;
+}
+
+.label-title i {
+  color: grey;
+  font-size: 15px;
 }
 
 .inventory-left .left-label {
   display: flex;
-  align-items: center;
-  width: 100%;
+  align-items: flex-start;
+  min-width: 200px;
   position: relative;
   text-align: left;
-  font-size: 12px;
-
-
 }
-
-
 
 .inventory-right .right-label {
   display: flex;
-  align-items: center;
-  width: 100%;
-  height: 100%;
+  justify-content: flex-end;
   flex-direction: row-reverse;
   text-align: right;
-  font-size: 12px;
-
+  align-items: flex-start;
 }
 
 @media screen and (max-width: 992px) {
   .inventory .inventory-right .right-label {
     flex-direction: row;
+    text-align: left;
   }
-}
-
-
-#item-quality-poor {
-  color: #9d9d9d;
-
-
-}
-
-#item-quality-common {
-  color: #ffffff;
-
-
-}
-
-#item-quality-uncommon {
-  color: #1eff00;
-
-
-}
-
-#item-quality-rare {
-  color: #0070dd;
-
-
-}
-
-#item-quality-epic {
-  color: #a335ee;
-
-
-}
-
-#item-quality-legendary {
-  color: #ff8000;
-
-
+  .inventory .inventory-right {
+    align-items: flex-start;
+    text-align: left;
+  }
 }

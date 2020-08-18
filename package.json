@@ -10,27 +10,25 @@
     "@types/node": "^12.12.47",
     "@types/react": "^16.9.41",
     "@types/react-dom": "^16.9.8",
-    "axios": "^0.19.2",
-    "bootstrap": "^4.5.0",
+    "@types/react-select": "^3.0.14",
+    "bootstrap": "^4.5.2",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "jest-enzyme": "^7.1.2",
+    "node-sass": "^4.14.1",
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1",
+    "react-scripts": "^3.4.3",
+    "react-select": "^3.1.0",
     "react-test-renderer": "^16.13.1",
-    "react-testing-library": "^8.0.1",
-    "typescript": "^3.7.5"
+    "react-testing-library": "^8.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
   },
   "browserslist": {
     "production": [
@@ -45,7 +43,7 @@
     ]
   },
   "devDependencies": {
-    "@testing-library/react": "^9.5.0",
-    "prettier": "2.0.5"
+    "prettier": "2.0.5",
+    "typescript": "^3.9.7"
   }
 }

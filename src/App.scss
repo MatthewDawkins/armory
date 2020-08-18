@@ -1,0 +1,61 @@
+h1 {
+  font-family: "Source Sans Pro", sans-serif;
+  font-weight: 700;
+  color: rgba(230, 226, 223, 0.95);
+}
+
+h2,
+h3,
+h4,
+h5 {
+  font-family: "Source Sans Pro", sans-serif;
+  color: rgba(209, 206, 203, 0.98);
+}
+
+ul,
+li {
+  font-size: 13px;
+}
+
+.error-message {
+  color: lightsalmon;
+}
+
+.welcome-message {
+  font-family: "Open Sans", sans-serif;
+  font-weight: 300;
+  color: rgb(236, 229, 224);
+  font-size: 17px;
+  opacity: 50%;
+  padding-top: 4px;
+}
+
+p {
+  white-space: normal;
+  color: grey;
+}
+
+.footer {
+  background-color: black;
+  color: rgb(236, 229, 224);
+  position: absolute;
+  bottom: 0;
+  opacity: 50%;
+  width: 100%;
+  font-size: 12px;
+  text-align: center;
+}
+
+.App {
+  margin-top: 0;
+  min-height: 100%;
+  width: 100%;
+  padding-bottom: 7vw;
+  padding-top: 20px;
+  position: relative;
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
