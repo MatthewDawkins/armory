@@ -1,0 +1,21 @@
+.percentile-chart {
+  opacity: 93%;
+  display: flex;
+  margin-top: -15px;
+}
+
+@media screen and (max-width: 992px) {
+  .percentile-wrapper {
+    flex-direction: column;
+    width: 100%;
+    justify-items: center;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .percentile-wrapper {
+    flex-direction: column;
+    width: 100%;
+    justify-items: center;
+  }
+}

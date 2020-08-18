@@ -1,0 +1,226 @@
+[
+  {
+      "id": 1,
+      "name": "Death Knight",
+      "specs": [
+          {
+              "id": 1,
+              "name": "Tank"
+          },
+          {
+              "id": 2,
+              "name": "DPS"
+          },
+          {
+              "id": 3,
+              "name": "DPS"
+          }
+      ]
+  },
+  {
+      "id": 2,
+      "name": "Druid",
+      "specs": [
+          {
+              "id": 1,
+              "name": "Balance"
+          },
+          {
+              "id": 2,
+              "name": "Feral"
+          },
+          {
+              "id": 3,
+              "name": "Tank"
+          },
+          {
+              "id": 4,
+              "name": "Healer"
+          }
+      ]
+  },
+  {
+      "id": 3,
+      "name": "Hunter",
+      "specs": [
+          {
+              "id": 1,
+              "name": "DPS"
+          },
+          {
+              "id": 2,
+              "name": "DPS"
+          },
+          {
+              "id": 3,
+              "name": "DPS"
+          }
+      ]
+  },
+  {
+      "id": 4,
+      "name": "Mage",
+      "specs": [
+          {
+              "id": 1,
+              "name": "Arcane"
+          },
+          {
+              "id": 2,
+              "name": "Fire"
+          },
+          {
+              "id": 3,
+              "name": "Frost"
+          }
+      ]
+  },
+  {
+      "id": 5,
+      "name": "Monk",
+      "specs": [
+          {
+              "id": 1,
+              "name": "Tank"
+          },
+          {
+              "id": 2,
+              "name": "Healer"
+          },
+          {
+              "id": 3,
+              "name": "DPS"
+          }
+      ]
+  },
+  {
+      "id": 6,
+      "name": "Paladin",
+      "specs": [
+          {
+              "id": 1,
+              "name": "Healer"
+          },
+          {
+              "id": 2,
+              "name": "Tank"
+          },
+          {
+              "id": 3,
+              "name": "DPS"
+          }
+      ]
+  },
+  {
+      "id": 7,
+      "name": "Priest",
+      "specs": [
+          {
+              "id": 1,
+              "name": "Healer"
+          },
+          {
+              "id": 2,
+              "name": "Healer"
+          },
+          {
+              "id": 3,
+              "name": "DPS"
+          }
+      ]
+  },
+  {
+      "id": 8,
+      "name": "Rogue",
+      "specs": [
+          {
+              "id": 1,
+              "name": "DPS"
+          },
+          {
+              "id": 2,
+              "name": "DPS"
+          },
+          {
+              "id": 3,
+              "name": "DPS"
+          },
+          {
+              "id": 4,
+              "name": "DPS"
+          }
+      ]
+  },
+  {
+      "id": 9,
+      "name": "Shaman",
+      "specs": [
+          {
+              "id": 1,
+              "name": "Elemental"
+          },
+          {
+              "id": 2,
+              "name": "Enhancement"
+          },
+          {
+              "id": 3,
+              "name": "Healer"
+          }
+      ]
+  },
+  {
+      "id": 10,
+      "name": "Warlock",
+      "specs": [
+          {
+              "id": 1,
+              "name": "DPS"
+          },
+          {
+              "id": 2,
+              "name": "DPS"
+          },
+          {
+              "id": 3,
+              "name": "DPS"
+          }
+      ]
+  },
+  {
+      "id": 11,
+      "name": "Warrior",
+      "specs": [
+          {
+              "id": 1,
+              "name": "DPS"
+          },
+          {
+              "id": 2,
+              "name": "DPS"
+          },
+          {
+              "id": 3,
+              "name": "Tank"
+          },
+          {
+              "id": 4,
+              "name": "DPS"
+          }
+      ]
+  },
+  {
+      "id": 12,
+      "name": "Demon Hunter",
+      "specs": [
+          {
+              "id": 1,
+              "name": "DPS"
+          },
+          {
+              "id": 2,
+              "name": "Tank"
+          }
+      ]
+  }
+]

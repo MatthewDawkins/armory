@@ -1,0 +1,159 @@
+.player-wrapper {
+  display: flex;
+  margin-top: 5px;
+  min-width: min-content;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.player-results {
+  backdrop-filter: blur(4px);
+  border-radius: 2px;
+}
+
+.player-inventory {
+  display: flex;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  flex-direction: column;
+}
+
+.player {
+  display: flex;
+  color: rgb(182, 176, 172);
+  width: 100%;
+  justify-content: flex-start;
+}
+
+.rank {
+  display: flex;
+  align-items: center;
+  font-family: "Open Sans", sans-serif;
+  color: grey;
+  margin-top: 15px;
+  padding-left: 15px;
+}
+
+.rank h4 {
+  font-size: 50px;
+}
+
+@media screen and (max-width: 992px) {
+  .player-wrapper {
+    max-width: 97%;
+    margin: 0 3% 0 3%;
+    min-width: 93%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .player-wrapper {
+    min-width: 95%;
+    max-width: 99%;
+    margin: 0 1% 0 1%;
+  }
+}
+
+#background-image {
+  background-size: auto 100%;
+}
+
+.player-background-Assassination-Rogue {
+  background-image: url("https://www.scrollsoflore.com/gallery/albums/wow_talents/rogue_assassination.jpg");
+}
+
+.player-background-Subtlety-Rogue {
+  background-image: url("https://www.scrollsoflore.com/gallery/albums/wow_talents/rogue_subtlety.jpg");
+}
+.player-background-Outlaw-Rogue {
+  background-image: url("https://www.scrollsoflore.com/gallery/albums/wow_talents/rogue_outlaw.jpg");
+}
+
+.player-background-Marksmanship-Hunter {
+  background-image: url("https://www.scrollsoflore.com/gallery/albums/wow_talents/hunter_marksmanship.jpg");
+}
+
+.player-background-Survival-Hunter {
+  background-image: url("https://www.scrollsoflore.com/gallery/albums/wow_talents/hunter_survival.jpg");
+}
+.player-background-BeastMastery-Hunter {
+  background-image: url("https://www.scrollsoflore.com/gallery/albums/wow_talents/hunter_beastmastery.jpg");
+}
+
+.player-background-Feral-Druid-Tank,
+.player-background-Feral-Druid-DPS {
+  background-image: url("https://www.scrollsoflore.com/gallery/albums/wow_talents/druid_feral.jpg");
+}
+
+.player-background-Druid-Healer {
+  background-image: url("https://www.scrollsoflore.com/gallery/albums/wow_talents/druid_restoration.jpg");
+}
+
+.player-background-Balance-Druid-DPS {
+  background-image: url("https://www.scrollsoflore.com/gallery/albums/wow_talents/druid_balance.jpg");
+}
+
+.player-background-Affliction-Warlock {
+  background-image: url("https://www.scrollsoflore.com/gallery/albums/wow_talents/warlock_affliction.jpg");
+}
+.player-background-Demonology-Warlock {
+  background-image: url("https://www.scrollsoflore.com/gallery/albums/wow_talents/warlock_demonology.jpg");
+}
+.player-background-Destruction-Warlock {
+  background-image: url("https://www.scrollsoflore.com/gallery/albums/wow_talents/warlock_destruction.jpg");
+}
+
+.player-background-Warrior {
+  background-image: url("https://www.scrollsoflore.com/gallery/albums/wow_talents/warrior_arms.jpg");
+}
+
+.player-background-Fury-Warrior {
+  background-image: url("https://www.scrollsoflore.com/gallery/albums/wow_talents/warrior_fury.jpg");
+}
+
+.player-background-Warrior-Tank {
+  background-image: url("https://www.scrollsoflore.com/gallery/albums/wow_talents/warrior_protection.jpg");
+}
+
+.player-background-Retribution-Paladin {
+  background-image: url("https://www.scrollsoflore.com/gallery/albums/wow_talents/paladin_combat.jpg");
+}
+
+.player-background-Paladin-Tank {
+  background-image: url("https://www.scrollsoflore.com/gallery/albums/wow_talents/paladin_protection.jpg");
+}
+
+.player-background-Paladin-Healer {
+  background-image: url("https://www.scrollsoflore.com/gallery/albums/wow_talents/paladin_holy.jpg");
+}
+
+.player-background-Priest-Healer {
+  background-image: url("https://www.scrollsoflore.com/gallery/albums/wow_talents/priest_holy.jpg");
+}
+
+.player-background-Shadow-Priest {
+  background-image: url("https://www.scrollsoflore.com/gallery/albums/wow_talents/priest_shadow.jpg");
+}
+
+.player-background-Arcane-Mage {
+  background-image: url("https://www.scrollsoflore.com/gallery/albums/wow_talents/mage_arcane.jpg");
+}
+
+.player-background-Fire-Mage {
+  background-image: url("https://www.scrollsoflore.com/gallery/albums/wow_talents/mage_fire.jpg");
+}
+.player-background-Frost-Mage {
+  background-image: url("https://www.scrollsoflore.com/gallery/albums/wow_talents/mage_frost.jpg");
+}
+
+.player-background-Elemental-Shaman {
+  background-image: url("https://www.scrollsoflore.com/gallery/albums/wow_talents/shaman_elemental.jpg");
+}
+
+.player-background-Shaman-Healer {
+  background-image: url("https://www.scrollsoflore.com/gallery/albums/wow_talents/shaman_restoration.jpg");
+}
+
+.player-background-Enhancement-Shaman {
+  background-image: url("https://www.scrollsoflore.com/gallery/albums/wow_talents/shaman_enhancement.jpg");
+}

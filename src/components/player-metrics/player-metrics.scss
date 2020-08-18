@@ -1,0 +1,14 @@
+.label {
+  display: flex;
+  margin: 40px 10px 5px 10px;
+  padding: auto 15px auto 15px;
+  align-items: flex-start;
+}
+.player-metrics {
+  display: flex;
+  justify-content: space-evenly;
+  height: 100%;
+  width: 53%;
+  min-height: fit-content;
+  margin: -17px 15px auto 15px;
+}

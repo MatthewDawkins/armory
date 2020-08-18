@@ -1,0 +1,54 @@
+.inventory-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  min-width: 215px;
+  position: relative;
+}
+
+.inventory-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 215px;
+
+  position: relative;
+  padding-bottom: 5px;
+}
+
+.label-title {
+  margin-top: 15px;
+  font-size: 18px;
+}
+
+.label-title i {
+  color: grey;
+  font-size: 15px;
+}
+
+.inventory-left .left-label {
+  display: flex;
+  align-items: flex-start;
+  min-width: 200px;
+  position: relative;
+  text-align: left;
+}
+
+.inventory-right .right-label {
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: row-reverse;
+  text-align: right;
+  align-items: flex-start;
+}
+
+@media screen and (max-width: 992px) {
+  .inventory .inventory-right .right-label {
+    flex-direction: row;
+    text-align: left;
+  }
+  .inventory .inventory-right {
+    align-items: flex-start;
+    text-align: left;
+  }
+}

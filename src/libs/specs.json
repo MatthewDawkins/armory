@@ -1,0 +1,82 @@
+[{
+  "alt": "Druid Tank",
+  "img": "ability_racial_bearform.jpg"
+}, {
+  "alt": "Balance Druid DPS",
+  "img": "spell_nature_starfall.jpg"
+}, {
+  "alt": "Feral Druid DPS",
+  "img": "ability_druid_catform.jpg"
+}, {
+  "alt": "Druid Healer",
+  "img": "spell_nature_healingtouch.jpg"
+}, {
+  "alt": "Marksmanship Hunter",
+  "img": "ability_hunter_focusedaim.jpg"
+}, {
+  "alt": "BeastMastery Hunter",
+  "img": "ability_hunter_bestialdiscipline.jpg"
+}, {
+  "alt": "Survival Hunter",
+  "img": "ability_hunter_camouflage.jpg"
+}, {
+  "alt":  "Arcane Mage",
+  "img": "spell_holy_magicalsentry.jpg"
+}, {
+  "alt":  "Frost Mage",
+  "img": "spell_frost_frostbolt02.jpg"
+}, {
+  "alt":  "Fire Mage",
+  "img": "spell_fire_firebolt02.jpg"
+}, {
+  "alt": "Paladin Tank",
+  "img": "ability_paladin_shieldofthetemplar.jpg"
+}, {
+  "alt": "Retribution Paladin",
+  "img": "spell_holy_auraoflight.jpg"
+}, {
+  "alt": "Paladin Healer",
+  "img": "spell_holy_holybolt.jpg"
+}, {
+  "alt": "Priest Healer",
+  "img": "spell_holy_guardianspirit.jpg"
+}, {
+  "alt": "Shadow Priest",
+  "img": "spell_shadow_shadowwordpain.jpg"
+}, {
+  "alt":  "Assassination Rogue",
+  "img": "ability_rogue_eviscerate.jpg"
+}, {
+  "alt":  "Outlaw Rogue",
+  "img": "inv_sword_30.jpg"
+}, {
+  "alt":  "Subtlety Rogue",
+  "img": "ability_stealth.jpg"
+}, {
+  "alt": "Elemental Shaman",
+  "img": "spell_nature_lightning.jpg"
+}, {
+  "alt": "Enhancement Shaman",
+  "img": "spell_shaman_improvedstormstrike.jpg"
+}, {
+  "alt": "Shaman Healer",
+  "img": "spell_nature_magicimmunity.jpg"
+}, {
+  "alt": "Destruction Warlock",
+  "img": "spell_shadow_rainoffire.jpg"
+}, {
+  "alt":  "Demonology Warlock",
+  "img": "spell_shadow_metamorphosis.jpg"
+}, {
+  "alt":  "Affliction Warlock",
+  "img": "spell_shadow_deathcoil.jpg"
+}, {
+  "alt": "Fury Warrior",
+  "img": "ability_warrior_innerrage.jpg"
+}, {
+  "alt": "Warrior Tank",
+  "img": "ability_warrior_defensivestance.jpg"
+}]
+
+
+

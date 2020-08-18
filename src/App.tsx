@@ -1,81 +1,108 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Header } from "./components/header/header";
 import { Searchbar } from "./components/searchbar/searchbar";
-import { Player } from "./components/player/player";
-import Spinner from "react-bootstrap/Spinner"
-import { WCRAFT_API_URL } from "./placeholders";
-import "./App.css";
+import { SearchResults } from "./components/search-results/search-results";
+import Spinner from "react-bootstrap/Spinner";
+import { Raid, RaidData } from "./libs/types";
+import { WCRAFT_API_URL, WCRAFT_API_KEY } from "./libs/placeholders";
+import "./App.scss";
 
-type playerInfo = {
-  username: string;
-  server: string;
-  region: string;
-}
+const raids: Raid[] = [
+  {
+    name: "MC",
+    raidID: 1000,
+    encounterID: 673,
+    phaseID: 1,
+  },
+  {
+    name: "BWL",
+    raidID: 1002,
+    encounterID: 630,
+    phaseID: 2,
+  },
+  {
+    name: "AQ",
+    raidID: 1005,
+    encounterID: 700,
+    phaseID: 3,
+  },
+];
 
-const playerInitialState: playerInfo = {
-  username: "",
-  server: "",
-  region: "",
-};
+const initialPlayerResultsState: RaidData[] = [
+  {
+    name: "",
+  },
+];
 
+export const App: React.FC = () => {
+  const [currentSearch, setCurrentSearch] = React.useState("");
+  const [prevSearches, setPrevSearches] = React.useState<string[]>([]);
+  const [loading, setLoading] = React.useState(false);
+  const [error, setError] = React.useState("");
+  const [playerResults, setPlayerResults] = React.useState<RaidData[]>(
+    initialPlayerResultsState
+  );
 
-export const App = () => {
-  const [error, setError] = useState(null);
-  const [isLoaded, setIsLoaded] = React.useState(false);
-  const [loading, setLoading] = useState(false);
-  const [player, setPlayer] = useState<playerInfo>(playerInitialState);
-  const [playerResults, setPlayerResults] = useState<any[]>([{}]);
-  const [prevSearches, setPrevSearches] = useState<string[]>([]);
-
-
-  const getInventory = (results: any[]) => {
-    const result = results.find((encounter) => (encounter.gear).find((item: any) => item.name !== "Unknown Item"));
-    return ([{
-      items: result.gear,
-      class: result.class,
-      spec: result.spec,
-      percentile: result.percentile,
-      name: result.characterName,
-      server: result.server,
-    }]);
+  const doParsesFetchForEachRaid = async (raids: Raid[], search: string) => {
+    setLoading(true);
+    const raidRankings = raids.map((raid) => {
+      return doParsesFetch(
+        `${WCRAFT_API_URL}/parses/character/${search}?zone=${raid.raidID}`,
+        4,
+        raid
+      );
+    });
+    const results: RaidData[] = await Promise.all(raidRankings);
+    handleResults(results, search);
+    setLoading(false);
   };
 
-  useEffect(() => {
-    const playerURL = `${player.username}/${player.server}/${player.region}`;
-    if (player.username !== "") {
-      setLoading(true);
-      fetch(`${WCRAFT_API_URL}parses/character/${playerURL}?&api_key=${process.env.REACT_APP_WARCRAFTLOGS_API_KEY}`)
-        .then(res => res.json())
-        .then((result) => {
-          setIsLoaded(true);
-          if (!result.error) {
-            setPlayerResults(getInventory(result));
-            setError(null);
-            setLoading(false);
-          } else {
-            throw (new Error(result.error));
-          }
-        })
-        .catch((error) => {
-          setIsLoaded(true);
-          setLoading(false);
-          setError(error.message);
-          setPrevSearches(prevSearches => prevSearches.slice(0, -1));
-        })
+  const doParsesFetch = async (baseUrl: string, phases: number, raid: Raid) => {
+    for (let i = phases; i >= 0; i--) {
+      try {
+        const res = await fetch(
+          `${baseUrl}&zoneID=${raid.raidID}&partition=${i}&${WCRAFT_API_KEY}`
+        );
+        const results = await res.json();
+        console.log("parseresults", results);
+        if (results.length) {
+          return {
+            ...raid,
+            results: results,
+          };
+        }
+      } catch (error) {
+        console.log(error);
+      }
     }
-  }, [player]);
+    return { name: raid.name };
+  };
 
+  const handleResults = (results: RaidData[], search: string) => {
+    const isValid = !!results.find((report) => report.results);
+    if (isValid) {
+      setPrevSearches((prev) =>
+        prev.length < 8
+          ? Array.from(new Set([...prev, search]))
+          : Array.from(new Set([...prev.slice(1, prev.length), search]))
+      );
+      setPlayerResults(results);
+    } else {
+      setError("Valid data for player could not be found");
+    }
+  };
 
   const handleSearch = (search: string) => {
-    console.log(Array.from(new Set([...prevSearches, search])));
-    setPrevSearches(Array.from(new Set([...prevSearches, search])));
-
-    const [username, server, region] = search.split("_");
-    setPlayer({ username: username, server: server, region: region });
+    if (search && currentSearch !== search) {
+      setCurrentSearch(search);
+      setError("");
+      doParsesFetchForEachRaid(raids, search);
+    }
+    return;
   };
 
-  const deleteSearch = (prevSearch: any) => {
-    setPrevSearches(prevSearches.filter(prev => prev !== prevSearch));
+  const deleteSearch = (prevSearch: string) => {
+    setPrevSearches(prevSearches.filter((prev) => prev !== prevSearch));
   };
 
   return (
@@ -91,30 +118,17 @@ export const App = () => {
           <span className="sr-only">Loading...</span>
         </Spinner>
       )}
-      {(!loading && error) && (
-        <h4 className="error-message">{error}</h4>
-      )}
-      {(isLoaded && prevSearches.length) && (
-        playerResults.map(result => (
-          <Player
-            name={result.name}
-            server={result.server}
-            items={result.items}
-            class={result.class}
-            spec={result.spec}
-            percentile={result.percentile}
-            region={player.region}
-          />
-        ))
-      )}
-      {(!loading && !prevSearches.length) && (
-        <h4 className="welcome-message">
-          <i>Input username/region/server of player to Search</i>
-        </h4>
+      {!loading && error && <h5 className="error-message">{error}</h5>}
+      {!error && playerResults[0].name ? (
+        <SearchResults playerInfo={currentSearch} raids={playerResults} />
+      ) : (
+        !error && (
+          <h4 className="welcome-message">
+            <i>Input username/region/server of player to Search</i>
+          </h4>
+        )
       )}
       <footer className="footer">Classic Wow Armory</footer>
     </div>
   );
-}
-
-
+};

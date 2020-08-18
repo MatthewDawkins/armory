@@ -1,11 +1,9 @@
 import React, { useRef } from "react";
+import { SearchHistory } from "../search-history/search-history";
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
-import { SearchHistory } from "../search-history/search-history";
-import { servers, regions } from "../../placeholders";
-import "./searchbar.css";
-
+import "./searchbar.scss";
 
 type SearchbarProps = {
   search: (data: string) => void;
@@ -13,18 +11,15 @@ type SearchbarProps = {
   prevSearches: any[];
 };
 
-interface Region {
-  [region: string]: string[];
-}
+const serversByRegion = require("../../libs/servers.json");
 
 export const Searchbar: React.FC<SearchbarProps> = (props) => {
-
-  const [regionInput, setRegionInput] = React.useState("");
   const [nameInput, setNameInput] = React.useState("");
-  const [serverInput, setServerInput] = React.useState("");
+  const [serverInput, setServerInput] = React.useState("Server");
+  const [regionInput, setRegionInput] = React.useState("Region");
   const [isOpen, setIsOpen] = React.useState(false);
-  const node = useRef<HTMLHeadingElement>(null);
 
+  const node = useRef<HTMLHeadingElement>(null);
 
   React.useEffect(() => {
     document.addEventListener("mousedown", handleClick);
@@ -33,18 +28,18 @@ export const Searchbar: React.FC<SearchbarProps> = (props) => {
     };
   }, []);
 
-  const handleSearch = (prevSearch: string) => {
-    const [username, server, region] = prevSearch.split("_");
-    setNameInput(username);
-    setServerInput(server);
-    setRegionInput(region);
-    props.search(prevSearch);
+  const handleClick = (e: any) => {
+    if (node.current && node.current.contains(e.target)) {
+      return;
+    }
+    setIsOpen(false);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
     if (regionInput.length && nameInput.length && serverInput.length) {
-      console.log(`${nameInput}_${serverInput}_${regionInput}`);
-      props.search(`${nameInput}_${serverInput}_${regionInput}`);
+      console.log(`${nameInput}/${serverInput}/${regionInput}`);
+      props.search(`${formatName(nameInput)}/${serverInput}/${regionInput}`);
     } else {
       return console.log("failed");
     }
@@ -54,66 +49,72 @@ export const Searchbar: React.FC<SearchbarProps> = (props) => {
   const handleSubmitEnter = (e: any) => {
     if (e.key === "Enter") {
       e.preventDefault();
-      handleSubmit();
+      handleSubmit(e);
     }
     return;
   };
 
-  const handleClick = (e: any) => {
-    if (node.current && node.current.contains(e.target)) {
-      return;
-    }
-    setIsOpen(false);
+  const formatName = (name: string): string => {
+    return (
+      name.charAt(0).toUpperCase() + name.slice(1, name.length).toLowerCase()
+    );
   };
 
-
-
   return (
-    <div className="searchbar" ref={node} onClick={e => setIsOpen(!isOpen)}>
-      <InputGroup onKeyPress={(e: any) => handleSubmitEnter(e)} >
+    <div className="searchbar" ref={node} onClick={(e) => setIsOpen(!isOpen)}>
+      <InputGroup onKeyPress={(e: any) => handleSubmitEnter(e)}>
         <FormControl
-          size="lg"
+          size="sm"
           placeholder="Username"
           aria-label="Username"
           aria-describedby="basic-addon2"
           value={nameInput}
-          onChange={e => setNameInput(e.target.value)}
+          onChange={(e) => setNameInput(e.target.value)}
         />
         <FormControl
-          size="lg"
+          size="sm"
           as="select"
-          value={regionInput || "region"}
-          onChange={e => e && setRegionInput(e.target.value)}
+          value={regionInput}
+          onChange={(e) => e && setRegionInput(e.target.value)}
         >
-          <option key={"region"}>Region</option>
-          {regions.map((region, idx) => <option value={region} key={`region-${idx}`}>{region}</option>)}
+          <option value="" key="default-region">
+            Region
+          </option>
+          {Object.keys(serversByRegion).map((region: string, idx: number) => (
+            <option value={region} key={`region-${idx}`}>
+              {region}
+            </option>
+          ))}
         </FormControl>
         <FormControl
-          size="lg"
+          size="sm"
           as="select"
           value={serverInput}
-          onChange={e => e && setServerInput(e.target.value)}
+          onChange={(e) => e && setServerInput(e.target.value)}
         >
-          <option key={"server"}>{regionInput ? "Server" : "..."}</option>
-          {regionInput ? (servers[regionInput].map((server, idx) => <option value={server} key={`server-${idx}`}>{server}</option>)) : (
-            Object.keys(servers).map((server, idx) => <option value={server} key={`server-${idx}`}>{server}</option>)
-          )}
+          <option value="" key="default-server">
+            Server
+          </option>
+          {regionInput !== "Region" &&
+            serversByRegion[regionInput].map((server: string, idx: number) => (
+              <option value={server} key={`server-${idx}`}>
+                {server}
+              </option>
+            ))}
         </FormControl>
         <InputGroup.Append>
-          <Button size="lg" variant="primary" onClick={handleSubmit}>Submit</Button>
+          <Button variant="primary" size="sm" onClick={handleSubmit}>
+            Submit
+          </Button>
         </InputGroup.Append>
       </InputGroup>
       {isOpen && (
         <SearchHistory
           delete={props.delete}
-          search={handleSearch}
+          search={props.search}
           searchedPlayers={props.prevSearches}
-          onClick={handleClick}
         />
       )}
     </div>
   );
 };
-
-
-

@@ -1,0 +1,18 @@
+.timestamp {
+  margin-top: 5px;
+  padding-right: 3px;
+  justify-content: flex-end;
+  width: 100%;
+  display: flex;
+  opacity: 80%;
+}
+
+.timestamp {
+  font-size: 16px;
+}
+
+@media screen and (max-width: 600px) {
+  .timestamp {
+    justify-content: center;
+  }
+}

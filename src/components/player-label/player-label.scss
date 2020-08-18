@@ -1,0 +1,125 @@
+.player-label {
+  display: flex;
+  width: 25%;
+  min-width: 375px;
+  align-content: center;
+  justify-content: flex-start;
+  margin-top: -10px;
+  margin-left: 15px;
+  height: 130px;
+  padding-left: 15px;
+  border-right: 5px solid rgba(0, 0, 0, 0.65);
+}
+
+.nameplate {
+  text-align: left;
+  display: flex;
+  align-self: center;
+  margin-top: -5px;
+  margin-left: -2px;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+
+.username {
+  font-size: 33px;
+  margin: 10px 5px 5px 5px;
+  line-height: 27px;
+}
+
+.sub-label h3 {
+  font-size: 15px;
+  margin: auto;
+  padding-left: 7px;
+}
+
+.class-icon {
+  width: 65px;
+  height: 65px;
+  float: left;
+  border-radius: 200px;
+  box-shadow: inset 0 0 5px hsl(0, 0%, 34%), inset 0 0 5px, hsl(0, 0%, 34%), 0 0 0 5px hsl(0, 0%, 78%);
+  display: flex;
+  align-self: center;
+  margin-top: -10px;
+}
+
+#player-spec {
+  display: flex;
+  margin: -7px 5px auto -25px;
+  font-size: 15px;
+  align-items: center;
+}
+
+.spec-icon {
+  margin: 0 5px 3px 3px;
+  border-radius: 100px;
+  box-shadow: inset 0 0 5px hsl(0, 0%, 34%), inset 0 0 5px, hsl(0, 0%, 34%), 0 0 0 5px hsl(0, 0%, 78%);
+  opacity: 98%;
+  width: 25px;
+}
+
+#player-class-Druid {
+  color: #ff7d0a;
+}
+
+#player-class-Warrior {
+  color: #c79c6e;
+}
+
+#player-class-Mage {
+  color: #69ccf0;
+}
+
+#player-class-Paladin {
+  color: #f58cba;
+}
+
+#player-class-Priest {
+  color: #ffffff;
+}
+
+#player-class-Rogue {
+  color: #fff569;
+}
+
+#player-class-Shaman {
+  color: #0070de;
+}
+
+#player-class-Warlock {
+  color: #9482c9;
+}
+
+#player-class-Hunter {
+  color: #abd473;
+}
+
+@media screen and (max-width: 992px) {
+  .player-label {
+    min-width: 100%;
+    max-width: 100vw;
+    border-bottom: 7px solid rgba(0, 0, 0, 0.7);
+    border-right: none;
+    margin: 0;
+  }
+  .nameplate {
+    font-size: 35px;
+    padding: 0;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .player-label {
+    min-width: 100%;
+    max-width: 100vw;
+    max-height: 100%;
+    border-bottom: 7px solid rgba(0, 0, 0, 0.7);
+    border-right: none;
+    margin: 0;
+  }
+  .nameplate {
+    margin-bottom: 0;
+    font-size: 37px;
+  }
+}
