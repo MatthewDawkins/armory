@@ -3,7 +3,7 @@ import { SearchHistory } from "../search-history/search-history";
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
-import "./searchbar.scss";
+import "./searchbar.css";
 
 type SearchbarProps = {
   search: (data: string) => void;

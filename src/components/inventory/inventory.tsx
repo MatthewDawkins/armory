@@ -2,7 +2,7 @@ import React from "react";
 import { InventorySide } from "../inventory-side/inventory-side";
 import { InventoryBottom } from "../inventory-bottom/inventory-bottom";
 import { itemSlots } from "../../libs/placeholders";
-import "./inventory.scss";
+import "./inventory.css";
 
 type InventoryProps = {
   items: any[];

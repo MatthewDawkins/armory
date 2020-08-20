@@ -1,7 +1,7 @@
 import React from "react";
 import { Item } from "../item/item";
 import { GearItem } from "../../libs/types";
-import "./inventory-bottom.scss";
+import "./inventory-bottom.css";
 
 type InventoryBottomProps = {
   items: GearItem[];

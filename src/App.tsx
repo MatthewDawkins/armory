@@ -1,11 +1,11 @@
 import React from "react";
+import "./App.css";
 import { Header } from "./components/header/header";
 import { Searchbar } from "./components/searchbar/searchbar";
 import { SearchResults } from "./components/search-results/search-results";
 import Spinner from "react-bootstrap/Spinner";
 import { Raid, RaidData } from "./libs/types";
 import { WCRAFT_API_URL, WCRAFT_API_KEY } from "./libs/placeholders";
-import "./App.scss";
 
 const raids: Raid[] = [
   {
@@ -24,8 +24,8 @@ const raids: Raid[] = [
     name: "AQ",
     raidID: 1005,
     encounterID: 700,
-    phaseID: 3,
-  },
+    phaseID: 3
+  }
 ];
 
 const initialPlayerResultsState: RaidData[] = [
@@ -48,7 +48,7 @@ export const App: React.FC = () => {
     const raidRankings = raids.map((raid) => {
       return doParsesFetch(
         `${WCRAFT_API_URL}/parses/character/${search}?zone=${raid.raidID}`,
-        4,
+        3,
         raid
       );
     });

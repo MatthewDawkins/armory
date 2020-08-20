@@ -1,5 +1,5 @@
 import React from "react";
-import "./search-history.scss";
+import "./search-history.css";
 
 type SearchHistoryProps = {
   searchedPlayers: string[];

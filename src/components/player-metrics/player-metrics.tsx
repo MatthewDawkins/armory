@@ -1,5 +1,5 @@
 import React from "react";
-import "./player-metrics.scss";
+import "./player-metrics.css";
 
 type MetricProps = {
   title: string;

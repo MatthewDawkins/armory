@@ -1,5 +1,5 @@
 import React from "react";
-import "./timestamp.scss";
+import "./timestamp.css";
 
 type TimestampProps = {
   milliseconds: number;

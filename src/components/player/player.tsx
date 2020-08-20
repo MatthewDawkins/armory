@@ -2,7 +2,7 @@ import React from "react";
 import { PlayerHeader } from "../player-header/player-header";
 import { PlayerLabel } from "../player-label/player-label";
 import { WCRAFT_API_URL, WCRAFT_API_KEY } from "../../libs/placeholders";
-import "./player.scss";
+import "./player.css";
 
 import classSpecIcons from "../../libs/specs.json";
 

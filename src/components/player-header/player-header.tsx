@@ -1,5 +1,5 @@
 import React from "react";
-import "./player-header.scss";
+import "./player-header.css";
 
 type PlayerHeaderProps = {
   playerSearch:string;

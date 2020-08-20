@@ -7,6 +7,7 @@ import { Timestamp } from "../timestamp/timestamp";
 import { RankingContainer } from "../ranking-container/ranking-container";
 import { GearItem, Report, ValidRaidData } from "../../libs/types";
 
+
 type PlayerWrapperProps = {
   playerInfo: string;
   raid: ValidRaidData;
@@ -41,17 +42,32 @@ export const PlayerWrapper: React.FC<PlayerWrapperProps> = ({
     return validateIsSpec(playerTypeOrSpec) ? "DPS" : playerTypeOrSpec;
   };
 
-  const getReportWithValidGear = (rankingsReports: any[]): Report | false => {
-    const reportWithValidInventory = rankingsReports.find((encounter: any) =>
-      encounter.gear.find((item: any) => item.name !== "Unknown Item")
-    );
-    return reportWithValidInventory || false;
-  };
+  // const getReportWithValidGear = (rankingsReports: any[]): Report | false => {
+  //   const reportWithValidInventory = rankingsReports.find((encounter: any) =>
+  //     encounter.gear.find((item: any) => item.name !== "Unknown Item")
+  //   );
+  //   return reportWithValidInventory || false;
+  // };
 
-  const inventoryReport = getReportWithValidGear(raid.results);
+  const getReportWithNewestValidGear = (rankingsReports: any[]): Report | false => {
+    let startTime = 0;
+    let validReport;
+    rankingsReports.forEach(report => {
+      if (report.gear.find((item:any) => item.name !== "Unknown Item")) {
+        const currentStartTime = report.startTime;
+        if (currentStartTime > startTime) {
+          startTime = currentStartTime
+          validReport = report
+        }
+      }
+    })
+    return (validReport ? validReport : false);
+  }
+
+  const inventoryReport = getReportWithNewestValidGear(raid.results);
   const InventoryWrapper = (
     <div className="player-inventory">
-      <Timestamp milliseconds={raid.results[0].startTime} />
+      <Timestamp milliseconds={inventoryReport ? inventoryReport.startTime : 0} />
       <Inventory
         items={
           inventoryReport

@@ -1,5 +1,5 @@
 import React from "react";
-import "./player-label.scss";
+import "./player-label.css";
 
 type PlayerLabelProps = {
   playerSearch: string;

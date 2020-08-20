@@ -1,5 +1,5 @@
 import React from "react";
-import "./inventory-side.scss";
+import "./inventory-side.css";
 import { Item } from "../item/item";
 import { GearItem } from "../../libs/types";
 

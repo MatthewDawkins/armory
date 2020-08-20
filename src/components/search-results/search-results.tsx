@@ -3,7 +3,7 @@ import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
 import { PlayerWrapper } from "../player-wrapper/player-wrapper";
 import { RaidData } from "../../libs/types";
-import "./search-results.scss";
+import "./search-results.css";
 
 type SearchResultsProps = {
   raids: RaidData[];

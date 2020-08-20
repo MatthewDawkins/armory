@@ -1,7 +1,7 @@
 import React from "react";
 import { PercentileCircle } from "../percentile-circle/percentile-circle";
 import { WCRAFT_API_URL, WCRAFT_API_KEY } from "../../libs/placeholders";
-import "./percentile-container.scss";
+import "./percentile-container.css";
 
 type PercentileContainerProps = {
   player: string;
@@ -53,7 +53,6 @@ export const PercentileContainer: React.FC<PercentileContainerProps> = (
         bestPercentiles.set(parse.encounterID, parse.percentile);
       }
     });
-    console.log("best:", bestPercentiles);
     return Array.from(bestPercentiles.values());
   };
 

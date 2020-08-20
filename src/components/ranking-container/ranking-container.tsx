@@ -1,6 +1,6 @@
 import React from "react";
 import { WCRAFT_API_URL, WCRAFT_API_KEY } from "../../libs/placeholders";
-import "./ranking-container.scss";
+import "./ranking-container.css";
 
 type RankingContainerProps = {
   player: string;

@@ -1,5 +1,5 @@
 import React from "react";
-import "./percentile-circle.scss";
+import "./percentile-circle.css";
 
 type PercentileCircleProps = {
   percentile: number;
