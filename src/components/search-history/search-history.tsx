@@ -45,7 +45,7 @@ export const SearchHistory: React.FC<SearchHistoryProps> = ({
   <div className="search-history">
     <div className="search-history-column">
       {searchedPlayers.map((player) => (
-        <span className="search">
+        <span className="search" key={`search-${player}`}>
           <p onClick={() => props.search(player)}>
             <DeleteIcon delete={props.delete} playerSearch={player} />
             {player.split("/").join(" - ")}

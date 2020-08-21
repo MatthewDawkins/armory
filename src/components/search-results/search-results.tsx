@@ -16,9 +16,7 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
 }) => {
   const getMostRecentValidRaid = (raids: RaidData[]): string => {
     for (let i = raids.length - 1; i >= 0; i--) {
-      console.log(raids[i]);
       if (raids[i].results) {
-        console.log(raids[i].name);
         return raids[i].name;
       }
     }
@@ -31,9 +29,9 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
         key={`${playerInfo}-${getMostRecentValidRaid(raids)}`}
         defaultActiveKey={getMostRecentValidRaid(raids)}
       >
-        {raids.map((raid: any, idx: number) => (
+        {raids.map((raid: any) => (
           <Tab
-            key={`${raid.name}-idx`}
+            key={`${raid.name}`}
             disabled={!raid.results}
             eventKey={raid.name}
             title={raid.name || "null"}

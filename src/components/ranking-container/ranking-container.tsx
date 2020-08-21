@@ -79,7 +79,7 @@ export const RankingContainer: React.FC<RankingContainerProps> = (props) => {
       ? "gold"
       : ranking < 150
       ? "silver"
-      : ranking < 300
+      : ranking < 250
       ? "bronze"
       : "";
 
@@ -89,7 +89,7 @@ export const RankingContainer: React.FC<RankingContainerProps> = (props) => {
     <div className="rankings-wrapper">
       {!loading && ranking !== -1 ? (
         <h5 className="ranking">
-          {ranking < 249 && (
+          {ranking < 251 && (
             <img
               className="ranking-medal-icon"
               src={`https://assets.rpglogs.com/img/${medal}.png`}
@@ -99,7 +99,7 @@ export const RankingContainer: React.FC<RankingContainerProps> = (props) => {
           {ranking}
         </h5>
       ) : (
-        error && <h5 className="error-ranking">{"> 500"}</h5>
+        error && (<h5 className="500+/error-ranking">{"< 500"}</h5>)
       )}
     </div>
   );

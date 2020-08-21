@@ -6,10 +6,8 @@ type TimestampProps = {
 };
 
 export const Timestamp: React.FC<TimestampProps> = ({ milliseconds }) => {
-
   const covertMillisecondsToLocal = (milliseconds: number): string => {
     const date = new Date(milliseconds);
-    console.log(date.toString());
     return date.toString();
   };
 

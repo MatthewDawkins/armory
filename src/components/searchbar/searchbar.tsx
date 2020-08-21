@@ -38,9 +38,7 @@ export const Searchbar: React.FC<SearchbarProps> = (props) => {
   const handleSubmit = (e: any) => {
     e.preventDefault();
     if (regionInput.length && nameInput.length && serverInput.length) {
-      props.search(`${formatName(nameInput)}/${serverInput.split(" ").join("-")}/${regionInput}`);
-    } else {
-      return console.log("failed");
+      props.search(`${formatName(nameInput)}/${serverInput.split(" ").join("-")}/${regionInput === "EU" ? regionInput : "US"}`);
     }
     setIsOpen(false);
   };
@@ -64,8 +62,8 @@ export const Searchbar: React.FC<SearchbarProps> = (props) => {
       <InputGroup onKeyPress={(e: any) => handleSubmitEnter(e)}>
         <FormControl
           size="sm"
-          placeholder="Username"
-          aria-label="Username"
+          placeholder="Character name"
+          aria-label="Character name"
           aria-describedby="basic-addon2"
           value={nameInput}
           onChange={(e) => setNameInput(e.target.value)}

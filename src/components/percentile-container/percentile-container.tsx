@@ -26,12 +26,10 @@ export const PercentileContainer: React.FC<PercentileContainerProps> = (
   React.useEffect(() => {
     const doParsesFetch = async () => {
       try {
-        console.log(player, zoneID, phaseID);
         const res = await fetch(
           `${WCRAFT_API_URL}/parses/character/${player}?&zone=${zoneID}&partition=${phaseID}&timeframe=historical&${WCRAFT_API_KEY}`
         );
         const parsesResults = await res.json();
-        console.log("parsesReport@pwrap", parsesResults);
         setPercentile(getAvg(getBestPercentiles(parsesResults)));
       } catch (error) {
         setError(error.message);

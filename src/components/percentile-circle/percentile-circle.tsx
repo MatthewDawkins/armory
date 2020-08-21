@@ -8,7 +8,9 @@ type PercentileCircleProps = {
 const diameter =
   "M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831";
 
-export const PercentileCircle: React.FC<PercentileCircleProps> = ({ percentile }) => {
+export const PercentileCircle: React.FC<PercentileCircleProps> = ({
+  percentile,
+}) => {
   const getBracket = (percentile: number): string => {
     const bracket =
       percentile >= 97

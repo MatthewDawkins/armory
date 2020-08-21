@@ -1,9 +1,6 @@
 import React from "react";
 import "./player-metrics.css";
 
-type MetricProps = {
-  title: string;
-};
 type PlayerMetricsProps = {
   left: React.ReactElement;
   right: React.ReactElement;
