@@ -1,5 +1,5 @@
 import React from "react";
-import "./player-label.scss";
+import "./player-label.css";
 
 type PlayerLabelProps = {
   playerSearch: string;
@@ -13,7 +13,7 @@ const iconUrl = "https://wow.zamimg.com/images/wow/icons/large/";
 export const PlayerLabel: React.FC<PlayerLabelProps> = (props) => {
   const { icon, label, playerSearch, playerClass } = props;
   const [name, server, region] = playerSearch.split("/");
-  const location = `${server} / ${region}`;
+  const location = `${server} / ${region === "EU" ? region : "NA"}`;
 
   return (
     <div className="player-label">

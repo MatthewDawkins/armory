@@ -3,7 +3,7 @@ import { SearchHistory } from "../search-history/search-history";
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
-import "./searchbar.scss";
+import "./searchbar.css";
 
 type SearchbarProps = {
   search: (data: string) => void;
@@ -38,10 +38,7 @@ export const Searchbar: React.FC<SearchbarProps> = (props) => {
   const handleSubmit = (e: any) => {
     e.preventDefault();
     if (regionInput.length && nameInput.length && serverInput.length) {
-      console.log(`${nameInput}/${serverInput}/${regionInput}`);
-      props.search(`${formatName(nameInput)}/${serverInput}/${regionInput}`);
-    } else {
-      return console.log("failed");
+      props.search(`${formatName(nameInput)}/${serverInput.split(" ").join("-")}/${regionInput === "EU" ? regionInput : "US"}`);
     }
     setIsOpen(false);
   };
@@ -65,8 +62,8 @@ export const Searchbar: React.FC<SearchbarProps> = (props) => {
       <InputGroup onKeyPress={(e: any) => handleSubmitEnter(e)}>
         <FormControl
           size="sm"
-          placeholder="Username"
-          aria-label="Username"
+          placeholder="Character name"
+          aria-label="Character name"
           aria-describedby="basic-addon2"
           value={nameInput}
           onChange={(e) => setNameInput(e.target.value)}

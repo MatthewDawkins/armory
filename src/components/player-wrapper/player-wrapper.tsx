@@ -7,17 +7,16 @@ import { Timestamp } from "../timestamp/timestamp";
 import { RankingContainer } from "../ranking-container/ranking-container";
 import { GearItem, Report, ValidRaidData } from "../../libs/types";
 
+const playerClasses = require("../../libs/classes.json");
+
 type PlayerWrapperProps = {
   playerInfo: string;
   raid: ValidRaidData;
 };
 
-const playerClasses = require("../../libs/classes.json");
+export const PlayerWrapper: React.FC<PlayerWrapperProps> = (props) => {
+  const { playerInfo, raid } = props;
 
-export const PlayerWrapper: React.FC<PlayerWrapperProps> = ({
-  playerInfo,
-  raid,
-}) => {
   const validateIsSpec = (playerRankingsSpec: string): boolean =>
     !(
       playerRankingsSpec === "DPS" ||
@@ -28,7 +27,6 @@ export const PlayerWrapper: React.FC<PlayerWrapperProps> = ({
   const getPlayerType = (parsesReports: any[]): string => {
     let playerTypeOrSpec = "";
     const tankReport = parsesReports.find((report) => report.spec === "Tank");
-
     if (tankReport) {
       const dpsReport = parsesReports.find((report) => report.spec === "DPS");
       playerTypeOrSpec =
@@ -41,17 +39,27 @@ export const PlayerWrapper: React.FC<PlayerWrapperProps> = ({
     return validateIsSpec(playerTypeOrSpec) ? "DPS" : playerTypeOrSpec;
   };
 
-  const getReportWithValidGear = (rankingsReports: any[]): Report | false => {
-    const reportWithValidInventory = rankingsReports.find((encounter: any) =>
-      encounter.gear.find((item: any) => item.name !== "Unknown Item")
-    );
-    return reportWithValidInventory || false;
+  const getCurrentGearReport = (rankingsReports: any[]): Report | false => {
+    let startTime = 0;
+    let validReport;
+    rankingsReports.forEach((report) => {
+      if (report.gear.find((item: any) => item.name !== "Unknown Item")) {
+        const currentStartTime = report.startTime;
+        if (currentStartTime > startTime) {
+          startTime = currentStartTime;
+          validReport = report;
+        }
+      }
+    });
+    return validReport ? validReport : false;
   };
 
-  const inventoryReport = getReportWithValidGear(raid.results);
+  const inventoryReport = getCurrentGearReport(raid.results);
   const InventoryWrapper = (
     <div className="player-inventory">
-      <Timestamp milliseconds={raid.results[0].startTime} />
+      <Timestamp
+        milliseconds={inventoryReport ? inventoryReport.startTime : 0}
+      />
       <Inventory
         items={
           inventoryReport

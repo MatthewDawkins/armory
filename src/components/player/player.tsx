@@ -2,9 +2,9 @@ import React from "react";
 import { PlayerHeader } from "../player-header/player-header";
 import { PlayerLabel } from "../player-label/player-label";
 import { WCRAFT_API_URL, WCRAFT_API_KEY } from "../../libs/placeholders";
-import "./player.scss";
-
-import classSpecIcons from "../../libs/specs.json";
+import { PlayerContainer } from "../player-container/player-container";
+import { SpecInfo } from "../../libs/types";
+import "./player.css";
 
 type PlayerProps = {
   player: string;
@@ -19,26 +19,30 @@ type PlayerProps = {
 type Friendly = {
   name: string;
   icon: string;
+  id: number;
 };
 
-type SpecInfo = {
-  alt: string;
-  img: string;
+const initialFriendlyData: Friendly = {
+  id: -1,
+  icon: "",
+  name: "",
 };
 
 export const Player: React.FC<PlayerProps> = (props) => {
-  const [playerIcon, setPlayerIcon] = React.useState("");
-  const [loading, setLoading] = React.useState(true);
+  const [friendlyData, setFriendlyData] = React.useState<Friendly>(
+    initialFriendlyData
+  );
+
   const [error, setError] = React.useState("");
 
   const {
     player,
     playerClass,
     type,
-    spec,
     reportID,
     metrics,
     inventory,
+    spec,
   } = props;
 
   const [name] = player.split("/");
@@ -50,82 +54,56 @@ export const Player: React.FC<PlayerProps> = (props) => {
           `${WCRAFT_API_URL}/report/fights/${reportID}?&${WCRAFT_API_KEY}`
         );
         const results = await res.json();
-        console.log("fightsResults@player", results);
         const playerFriendlyResults = getFriendlyData(results.friendlies, name);
-        setPlayerIcon(playerFriendlyResults ? playerFriendlyResults.icon : "");
+        if (playerFriendlyResults) {
+          setFriendlyData((prev) => ({
+            ...prev,
+            id: playerFriendlyResults.id,
+            icon: playerFriendlyResults.icon,
+          }));
+        }
       } catch (error) {
-        console.log(error);
         setError(error.message);
       }
     };
     if (reportID) {
       doFightsReportFetch();
-      setLoading(false);
     }
   }, [name, reportID]);
 
   const getFriendlyData = (
     friendlies: Friendly[],
     playerName: string
-  ): Friendly => {
+  ): Friendly | false => {
     const friendlyData = friendlies.find(
       (player) => player.name === playerName
     );
-    return friendlyData || { name: "", icon: "" };
+    return friendlyData || false;
   };
 
-  const getPlayerLabelFormat = (playerType: string): string => {
-    const format: string =
-      playerType === "Tank" || playerType === "Healer"
-        ? "PlayerTypePriority"
-        : "PlayerSpecPriority";
-    return format;
-  };
-
-  const getClassLabel = (
+  const getPlayerLabel = (
     playerType: string,
-    playerClass: string,
-    playerSpec: string,
-    labelFormat: string
-  ): string =>
-    labelFormat === "PlayerTypePriority"
-      ? `${playerClass} ${playerType}`
-      : `${playerSpec} ${playerClass}`;
-
-  const getSpecFromIconFilename = (
-    iconFilename: string,
+    spec: string,
     playerClass: string
-  ): string => {
-    console.log(iconFilename, playerClass);
-    const playerSpecInfo = iconFilename
-      .split("-")
-      .filter((info) => info.toLowerCase() === playerClass);
-    return playerSpecInfo.length ? playerSpecInfo[0] : "";
+  ) => {
+    return playerType === "Healer" || playerType === "Tank"
+      ? `${playerClass} ${playerType}`
+      : `${spec} ${playerClass}`;
   };
-
-  const playerFormat = getPlayerLabelFormat(type);
-  const specFromIcon = getSpecFromIconFilename(playerIcon, playerClass) || spec;
-  const playerLabel = getClassLabel(
-    type,
-    playerClass,
-    specFromIcon,
-    playerFormat
-  );
-
-  const specInfo: SpecInfo = classSpecIcons.find((specData) =>
-    specData.alt.includes(playerLabel)
-  ) || { alt: "", img: "" };
 
   return (
     <div className="player-wrapper">
-      {specInfo && (
-        <div
-          id="background-image"
-          className={`player-background-${
-            specInfo.alt.split(" ").join("-") || playerClass
-          }`}
-        >
-          {!loading && !error && (
+      <PlayerContainer
+        type={type}
+        playerClass={playerClass}
+        reportID={reportID}
+        label={getPlayerLabel(type, spec, playerClass)}
+        playerID={friendlyData.id}
+        renderPlayerContainer={(specInfo: SpecInfo) => (
+          <div
+            id="background-image"
+            className={`background-${specInfo.alt.split(" ").join("-")}`}
+          >
             <div className="player-results">
               <PlayerHeader playerSearch={player}>
                 <PlayerLabel
@@ -138,9 +116,9 @@ export const Player: React.FC<PlayerProps> = (props) => {
               </PlayerHeader>
               <div className="player-inventory">{inventory}</div>
             </div>
-          )}
-        </div>
-      )}
+          </div>
+        )}
+      />
     </div>
   );
 };

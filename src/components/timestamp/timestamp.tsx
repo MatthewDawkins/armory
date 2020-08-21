@@ -1,15 +1,13 @@
 import React from "react";
-import "./timestamp.scss";
+import "./timestamp.css";
 
 type TimestampProps = {
   milliseconds: number;
 };
 
 export const Timestamp: React.FC<TimestampProps> = ({ milliseconds }) => {
-
   const covertMillisecondsToLocal = (milliseconds: number): string => {
     const date = new Date(milliseconds);
-    console.log(date.toString());
     return date.toString();
   };
 

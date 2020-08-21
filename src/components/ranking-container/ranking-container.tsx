@@ -1,6 +1,6 @@
 import React from "react";
 import { WCRAFT_API_URL, WCRAFT_API_KEY } from "../../libs/placeholders";
-import "./ranking-container.scss";
+import "./ranking-container.css";
 
 type RankingContainerProps = {
   player: string;
@@ -26,7 +26,7 @@ export const RankingContainer: React.FC<RankingContainerProps> = (props) => {
     let hasMorePages = true;
     setLoading(true);
 
-    const doParsesFetch = async () => {
+    const doRankingsFetch = async () => {
       var pageCount = 1;
       while (hasMorePages && ranking === -1) {
         try {
@@ -53,7 +53,7 @@ export const RankingContainer: React.FC<RankingContainerProps> = (props) => {
     };
 
     if (name) {
-      doParsesFetch();
+      doRankingsFetch();
     }
   }, [
     name,
@@ -79,7 +79,7 @@ export const RankingContainer: React.FC<RankingContainerProps> = (props) => {
       ? "gold"
       : ranking < 150
       ? "silver"
-      : ranking < 300
+      : ranking < 250
       ? "bronze"
       : "";
 
@@ -89,17 +89,17 @@ export const RankingContainer: React.FC<RankingContainerProps> = (props) => {
     <div className="rankings-wrapper">
       {!loading && ranking !== -1 ? (
         <h5 className="ranking">
-          {ranking < 249 && (
+          {ranking < 251 && (
             <img
               className="ranking-medal-icon"
               src={`https://assets.rpglogs.com/img/${medal}.png`}
               alt="ranking-medal"
             />
           )}
-          {`${ranking}`}
+          {ranking}
         </h5>
       ) : (
-        error && <h5 className="error-ranking">{"> 500"}</h5>
+        error && (<h5 className="500+/error-ranking">{"< 500"}</h5>)
       )}
     </div>
   );

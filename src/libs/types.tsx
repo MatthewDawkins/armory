@@ -17,6 +17,13 @@ export type RaidData = {
   results?: Report[];
 };
 
+
+export type SpecInfo = {
+  alt: string;
+  img: string;
+  talent?: string;
+};
+
 export type ValidRaidData = {
   name: string;
   raidID: number;

@@ -1,5 +1,5 @@
 import React from "react";
-import "./item.scss";
+import "./item.css";
 
 type ItemProps = {
   img: string;

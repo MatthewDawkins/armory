@@ -1,11 +1,12 @@
 import React from "react";
+import "./App.css";
 import { Header } from "./components/header/header";
 import { Searchbar } from "./components/searchbar/searchbar";
 import { SearchResults } from "./components/search-results/search-results";
 import Spinner from "react-bootstrap/Spinner";
 import { Raid, RaidData } from "./libs/types";
 import { WCRAFT_API_URL, WCRAFT_API_KEY } from "./libs/placeholders";
-import "./App.scss";
+
 
 const raids: Raid[] = [
   {
@@ -48,7 +49,7 @@ export const App: React.FC = () => {
     const raidRankings = raids.map((raid) => {
       return doParsesFetch(
         `${WCRAFT_API_URL}/parses/character/${search}?zone=${raid.raidID}`,
-        4,
+        3,
         raid
       );
     });
@@ -64,7 +65,7 @@ export const App: React.FC = () => {
           `${baseUrl}&zoneID=${raid.raidID}&partition=${i}&${WCRAFT_API_KEY}`
         );
         const results = await res.json();
-        console.log("parseresults", results);
+
         if (results.length) {
           return {
             ...raid,
@@ -72,7 +73,7 @@ export const App: React.FC = () => {
           };
         }
       } catch (error) {
-        console.log(error);
+        setError(error.message)
       }
     }
     return { name: raid.name };
@@ -124,11 +125,13 @@ export const App: React.FC = () => {
       ) : (
         !error && (
           <h4 className="welcome-message">
-            <i>Input username/region/server of player to Search</i>
+            <i>Input character/region/server of player to Search</i>
           </h4>
         )
       )}
-      <footer className="footer">Classic Wow Armory</footer>
+      <footer className="footer">
+      {`© 2020 Classic Wow Armory`}
+      </footer>
     </div>
   );
 };
