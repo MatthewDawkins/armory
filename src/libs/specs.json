@@ -38,11 +38,6 @@
   {
     "alt": "Frost Mage",
     "img": "spell_frost_frostbolt02.jpg",
-    "talent": "Ice Barrier"
-  },
-  {
-    "alt": "Arcane Mage",
-    "img": "spell_holy_magicalsentry.jpg",
     "talent": "Arcane Power"
   },
   {

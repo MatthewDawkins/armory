@@ -7,7 +7,6 @@ import Spinner from "react-bootstrap/Spinner";
 import { Raid, RaidData } from "./libs/types";
 import { WCRAFT_API_URL, WCRAFT_API_KEY } from "./libs/placeholders";
 
-
 const raids: Raid[] = [
   {
     name: "MC",
@@ -73,7 +72,7 @@ export const App: React.FC = () => {
           };
         }
       } catch (error) {
-        setError(error.message)
+        setError(error.message);
       }
     }
     return { name: raid.name };
@@ -129,9 +128,7 @@ export const App: React.FC = () => {
           </h4>
         )
       )}
-      <footer className="footer">
-      {`© 2020 Classic Wow Armory`}
-      </footer>
+      <footer className="footer">{`© 2020 Classic Wow Armory`}</footer>
     </div>
   );
 };

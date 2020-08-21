@@ -102,7 +102,7 @@ export const Player: React.FC<PlayerProps> = (props) => {
         renderPlayerContainer={(specInfo: SpecInfo) => (
           <div
             id="background-image"
-            className={`background-${specInfo.alt.split(" ").join("-")}`}
+            className={`background-${specInfo.alt.split(" ").join("-") || playerClass}`}
           >
             <div className="player-results">
               <PlayerHeader playerSearch={player}>
