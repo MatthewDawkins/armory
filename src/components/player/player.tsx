@@ -1,13 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { PlayerHeader } from "../player-header/player-header";
 import { PlayerLabel } from "../player-label/player-label";
 import { WCRAFT_API_URL, WCRAFT_API_KEY } from "../../libs/placeholders";
+import { PlayerContext } from "../../hooks/playerContext";
 import { PlayerContainer } from "../player-container/player-container";
 import { SpecInfo } from "../../libs/types";
 import "./player.css";
 
 type PlayerProps = {
-  player: string;
   playerClass: string;
   type: string;
   spec: string;
@@ -33,19 +33,9 @@ export const Player: React.FC<PlayerProps> = (props) => {
     initialFriendlyData
   );
 
-  const [error, setError] = React.useState("");
+  const { playerClass, type, reportID, metrics, inventory, spec } = props;
 
-  const {
-    player,
-    playerClass,
-    type,
-    reportID,
-    metrics,
-    inventory,
-    spec,
-  } = props;
-
-  const [name] = player.split("/");
+  const [name] = useContext(PlayerContext).split("/");
 
   React.useEffect(() => {
     const doFightsReportFetch = async () => {
@@ -63,7 +53,7 @@ export const Player: React.FC<PlayerProps> = (props) => {
           }));
         }
       } catch (error) {
-        setError(error.message);
+        console.log(error);
       }
     };
     if (reportID) {
@@ -85,7 +75,7 @@ export const Player: React.FC<PlayerProps> = (props) => {
     playerType: string,
     spec: string,
     playerClass: string
-  ) => {
+  ): string => {
     return playerType === "Healer" || playerType === "Tank"
       ? `${playerClass} ${playerType}`
       : `${spec} ${playerClass}`;
@@ -102,12 +92,13 @@ export const Player: React.FC<PlayerProps> = (props) => {
         renderPlayerContainer={(specInfo: SpecInfo) => (
           <div
             id="background-image"
-            className={`background-${specInfo.alt.split(" ").join("-") || playerClass}`}
+            className={`background-${
+              specInfo.alt.split(" ").join("-") || playerClass
+            }`}
           >
             <div className="player-results">
-              <PlayerHeader playerSearch={player}>
+              <PlayerHeader>
                 <PlayerLabel
-                  playerSearch={player}
                   label={specInfo.alt}
                   icon={specInfo.img}
                   playerClass={playerClass}

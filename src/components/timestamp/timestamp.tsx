@@ -6,16 +6,15 @@ type TimestampProps = {
 };
 
 export const Timestamp: React.FC<TimestampProps> = ({ milliseconds }) => {
-  const covertMillisecondsToLocal = (milliseconds: number): string => {
+  const convertMillisecondsToTimeStamp = (milliseconds: number): string => {
     const date = new Date(milliseconds);
-    return date.toString();
-  };
-
-  const removeGMT = (milliseconds: number): string => {
-    const date = covertMillisecondsToLocal(milliseconds);
-    const dateWords = date.split(" ");
+    const dateWords = date.toString().split(" ");
     return dateWords.filter((word) => word !== "GMT-0700").join(" ");
   };
 
-  return <h5 className="timestamp">{removeGMT(milliseconds)}</h5>;
+  return (
+    <h5 className="timestamp">
+      {convertMillisecondsToTimeStamp(milliseconds)}
+    </h5>
+  );
 };

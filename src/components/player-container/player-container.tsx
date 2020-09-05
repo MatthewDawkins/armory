@@ -65,11 +65,9 @@ export const PlayerContainer: React.FC<PlayerContainerProps> = (props) => {
           const usedTalentResults = getTalentUsed(results.events, classSpecs);
           const specInfo =
             usedTalentResults && getSpecInfo(type, usedTalentResults);
-          console.log("used/spec", specInfo, usedTalentResults, results.events)
           setSpecInfo(specInfo || initialSpecInfo);
         }
       } catch (error) {
-        console.log(error.message);
       }
     };
 

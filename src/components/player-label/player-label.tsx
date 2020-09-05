@@ -1,8 +1,8 @@
 import React from "react";
+import { PlayerContext } from "../../hooks/playerContext";
 import "./player-label.css";
 
 type PlayerLabelProps = {
-  playerSearch: string;
   icon: string;
   label: string;
   playerClass: string;
@@ -11,8 +11,8 @@ type PlayerLabelProps = {
 const iconUrl = "https://wow.zamimg.com/images/wow/icons/large/";
 
 export const PlayerLabel: React.FC<PlayerLabelProps> = (props) => {
-  const { icon, label, playerSearch, playerClass } = props;
-  const [name, server, region] = playerSearch.split("/");
+  const { icon, label, playerClass } = props;
+  const [name, server, region] = React.useContext(PlayerContext).split("/");
   const location = `${server} / ${region === "EU" ? region : "NA"}`;
 
   return (

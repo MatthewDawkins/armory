@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { WCRAFT_API_URL, WCRAFT_API_KEY } from "../../libs/placeholders";
+import { PlayerContext } from "../../hooks/playerContext";
 import "./ranking-container.css";
+import Spinner from "react-bootstrap/Spinner";
 
 type RankingContainerProps = {
-  player: string;
   classID: number;
   rankingMetric: string;
   encounterID: number;
@@ -16,25 +17,25 @@ type PlayerRanking = {
 };
 
 export const RankingContainer: React.FC<RankingContainerProps> = (props) => {
-  const { player, classID, rankingMetric, encounterID, phaseID } = props;
-  const [name, server, region] = player.split("/");
+  const { classID, rankingMetric, encounterID, phaseID } = props;
+  const [name, server, region] = useContext(PlayerContext).split("/");
+
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState("");
   const [ranking, setRanking] = React.useState(-1);
 
   React.useEffect(() => {
-    let hasMorePages = true;
     setLoading(true);
 
     const doRankingsFetch = async () => {
       var pageCount = 1;
-      while (hasMorePages && ranking === -1) {
+
+      while (pageCount < 6 && ranking === -1) {
         try {
           const res = await fetch(
             `${WCRAFT_API_URL}/rankings/encounter/${encounterID}?metric=${rankingMetric}&partition=${phaseID}&region=${region}&server=${server}&class=${classID}&page=${pageCount}&${WCRAFT_API_KEY}`
           );
           const rankingsResults = await res.json();
-          hasMorePages = rankingsResults.hasMorePages;
           const playerRanking = getPlayerRanking(
             name,
             rankingsResults.rankings
@@ -98,8 +99,19 @@ export const RankingContainer: React.FC<RankingContainerProps> = (props) => {
           )}
           {ranking}
         </h5>
+      ) : loading && !error ? (
+        <div className="spinner-wrapper">
+          <Spinner
+            animation="border"
+            size="sm"
+            style={{ color: "grey" }}
+            role="status"
+          >
+            <span className="sr-only">Searching for ranking results...</span>
+          </Spinner>
+        </div>
       ) : (
-        error && (<h5 className="500+/error-ranking">{" < 500"}</h5>)
+        error && <h5 className="error-ranking">{"< 500"}</h5>
       )}
     </div>
   );

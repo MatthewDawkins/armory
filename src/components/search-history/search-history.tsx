@@ -6,13 +6,15 @@ type SearchHistoryProps = {
   search: (data: any) => void;
   delete: (prevSearch: string) => void;
 };
-
 type DeleteIconProps = {
   delete: (prevSearch: string) => void;
   playerSearch: string;
 };
 
-const DeleteIcon: React.FC<DeleteIconProps> = ({ playerSearch, ...props }) => (
+export const DeleteIcon: React.FC<DeleteIconProps> = ({
+  playerSearch,
+  ...props
+}) => (
   <i onClick={() => props.delete(playerSearch)}>
     <svg
       width="1em"
@@ -45,9 +47,9 @@ export const SearchHistory: React.FC<SearchHistoryProps> = ({
   <div className="search-history">
     <div className="search-history-column">
       {searchedPlayers.map((player) => (
-        <span className="search" key={`search-${player}`}>
+        <span  key={player} className="search">
+          <DeleteIcon delete={props.delete} playerSearch={player} />
           <p onClick={() => props.search(player)}>
-            <DeleteIcon delete={props.delete} playerSearch={player} />
             {player.split("/").join(" - ")}
           </p>
         </span>

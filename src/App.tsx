@@ -2,10 +2,12 @@ import React from "react";
 import "./App.css";
 import { Header } from "./components/header/header";
 import { Searchbar } from "./components/searchbar/searchbar";
-import { SearchResults } from "./components/search-results/search-results";
+import { PlayerContext } from "./hooks/playerContext";
 import Spinner from "react-bootstrap/Spinner";
-import { Raid, RaidData } from "./libs/types";
+import { Raid, RaidResults } from "./libs/types";
 import { WCRAFT_API_URL, WCRAFT_API_KEY } from "./libs/placeholders";
+import { TabsContainer } from "./components/tabs-container/tabs-container";
+import { SearchOptions } from "./components/search-options/search-options";
 
 const raids: Raid[] = [
   {
@@ -28,7 +30,7 @@ const raids: Raid[] = [
   },
 ];
 
-const initialPlayerResultsState: RaidData[] = [
+const initialPlayerResultsState: RaidResults[] = [
   {
     name: "",
   },
@@ -39,7 +41,7 @@ export const App: React.FC = () => {
   const [prevSearches, setPrevSearches] = React.useState<string[]>([]);
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState("");
-  const [playerResults, setPlayerResults] = React.useState<RaidData[]>(
+  const [playerResults, setPlayerResults] = React.useState<RaidResults[]>(
     initialPlayerResultsState
   );
 
@@ -52,7 +54,7 @@ export const App: React.FC = () => {
         raid
       );
     });
-    const results: RaidData[] = await Promise.all(raidRankings);
+    const results: RaidResults[] = await Promise.all(raidRankings);
     handleResults(results, search);
     setLoading(false);
   };
@@ -68,7 +70,7 @@ export const App: React.FC = () => {
         if (results.length) {
           return {
             ...raid,
-            results: results,
+            reports: results,
           };
         }
       } catch (error) {
@@ -78,8 +80,8 @@ export const App: React.FC = () => {
     return { name: raid.name };
   };
 
-  const handleResults = (results: RaidData[], search: string) => {
-    const isValid = !!results.find((report) => report.results);
+  const handleResults = (results: RaidResults[], search: string) => {
+    const isValid = !!results.find((report) => report.reports);
     if (isValid) {
       setPrevSearches((prev) =>
         prev.length < 8
@@ -93,9 +95,9 @@ export const App: React.FC = () => {
   };
 
   const handleSearch = (search: string) => {
+    setError("");
     if (search && currentSearch !== search) {
       setCurrentSearch(search);
-      setError("");
       doParsesFetchForEachRaid(raids, search);
     }
     return;
@@ -118,16 +120,23 @@ export const App: React.FC = () => {
           <span className="sr-only">Loading...</span>
         </Spinner>
       )}
-      {!loading && error && <h5 className="error-message">{error}</h5>}
-      {!error && playerResults[0].name ? (
-        <SearchResults playerInfo={currentSearch} raids={playerResults} />
-      ) : (
-        !error && (
-          <h4 className="welcome-message">
-            <i>Input character/region/server of player to Search</i>
-          </h4>
-        )
+      {!loading && error && (
+        <SearchOptions
+          playerSearch={currentSearch}
+          search={handleSearch}
+        />
       )}
+      {!error && playerResults[0].name
+        ? currentSearch && (
+            <PlayerContext.Provider value={currentSearch}>
+              <TabsContainer raids={playerResults} />
+            </PlayerContext.Provider>
+          )
+        : !error && !loading && (
+            <h4 className="welcome-message">
+              <i>Input character/region/server of player to Search</i>
+            </h4>
+          )}
       <footer className="footer">{`© 2020 Classic Wow Armory`}</footer>
     </div>
   );

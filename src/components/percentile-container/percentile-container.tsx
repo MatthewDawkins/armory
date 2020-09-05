@@ -1,10 +1,10 @@
 import React from "react";
 import { PercentileCircle } from "../percentile-circle/percentile-circle";
+import { PlayerContext } from "../../hooks/playerContext";
 import { WCRAFT_API_URL, WCRAFT_API_KEY } from "../../libs/placeholders";
 import "./percentile-container.css";
 
 type PercentileContainerProps = {
-  player: string;
   zoneID: number;
   phaseID: number;
 };
@@ -17,7 +17,8 @@ type ParseReport = {
 export const PercentileContainer: React.FC<PercentileContainerProps> = (
   props
 ) => {
-  const { player, zoneID, phaseID } = props;
+  const { zoneID, phaseID } = props;
+  const player = React.useContext(PlayerContext);
 
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState("");
@@ -30,7 +31,9 @@ export const PercentileContainer: React.FC<PercentileContainerProps> = (
           `${WCRAFT_API_URL}/parses/character/${player}?&zone=${zoneID}&partition=${phaseID}&timeframe=historical&${WCRAFT_API_KEY}`
         );
         const parsesResults = await res.json();
-        setPercentile(getAvg(getBestPercentiles(parsesResults)));
+        const bestPercentiles = getBestPercentiles(parsesResults);
+        const bestAvg = getAvg(bestPercentiles);
+        setPercentile(bestAvg);
       } catch (error) {
         setError(error.message);
       }
@@ -40,6 +43,7 @@ export const PercentileContainer: React.FC<PercentileContainerProps> = (
       doParsesFetch();
     }
   }, [player, zoneID, phaseID]);
+
 
   const getBestPercentiles = (parses: ParseReport[]): number[] => {
     const bestPercentiles = new Map();

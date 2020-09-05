@@ -1,5 +1,5 @@
 .search-history {
-  background-color: rgba(109, 97, 93, 0.1);
+  background-color: rgba(109, 97, 93, 0.28);
   align-self: flex-start;
   height: fit-content;
   min-width: 100%;
@@ -23,7 +23,6 @@
   margin-bottom: 0px;
   display: flex;
   align-items: center;
-  font-size: 13px;
 }
 
 .search {

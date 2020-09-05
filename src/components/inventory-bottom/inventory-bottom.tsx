@@ -1,15 +1,16 @@
 import React from "react";
 import { Item } from "../item/item";
-import { GearItem } from "../../libs/types";
+import { Gear } from "../../libs/types";
 import "./inventory-bottom.css";
 
 type InventoryBottomProps = {
-  items: GearItem[];
+  items: Gear[];
 };
 
 const enchants = require("../../libs/enchants.json");
 
 export const InventoryBottom: React.FC<InventoryBottomProps> = (props) => (
+
   <div className="inventory-bottom">
     {props.items.map((item, index) => (
       <div className="col-lg-4 col-xs-12" key={`invbot-${index}`}>
