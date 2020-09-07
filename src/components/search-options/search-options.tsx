@@ -6,27 +6,27 @@ import "./search-options.css";
 const servers = require("../../libs/servers.json");
 const regions = Object.keys(servers);
 
-const initialFailureMessage = "Valid player results could not be found";
-const trafficErrorMsg =
-  "Sorry! We currently cannot complete your search requests";
+// const trafficErrorMsg =
+//   "Sorry! We currently cannot complete your search requests";
 
 type SimiliarPlayerProps = {
   playerSearch: string;
+  onSearchError: () => void;
   search: (searchOption: string) => void;
 };
 
 export const SearchOptions: React.FC<SimiliarPlayerProps> = (props) => {
-  const { playerSearch } = props;
+  const { playerSearch, onSearchError } = props;
   const [characterName] = playerSearch.split("/");
-
+  const [error, setError] = React.useState<string>("Valid data was not found, searching for related results...");
   const [searchOptions, setSearchOptions] = React.useState<any[]>([]);
   const [loading, setLoading] = React.useState(true);
-  const [errorMsg, setError] = React.useState("");
 
   React.useEffect(() => {
     setLoading(true);
-    let searchOptions: any[] = [];
+    const abortController = new AbortController();
 
+    let searchOptions: any[] = [];
     const isValid = async (playerURL: string) => {
       const url = `${WCRAFT_API_URL}/parses/character/${playerURL}?&${WCRAFT_API_KEY}`;
       try {
@@ -36,9 +36,7 @@ export const SearchOptions: React.FC<SimiliarPlayerProps> = (props) => {
           return playerURL;
         }
       } catch (error) {
-        if (!errorMsg) {
-          setError(error.message);
-        }
+        console.log(error.message);
       }
       return false;
     };
@@ -48,6 +46,8 @@ export const SearchOptions: React.FC<SimiliarPlayerProps> = (props) => {
         let currRegion: string;
         if (region === "NA") {
           currRegion = "US";
+        } else {
+          currRegion = region;
         }
         const serversOfRegion: any[] = servers[region];
         serversOfRegion.forEach((server) => {
@@ -57,22 +57,31 @@ export const SearchOptions: React.FC<SimiliarPlayerProps> = (props) => {
         });
       });
       const results: any[] = await Promise.all(searchOptions);
-      setSearchOptions(results.filter((result) => result !== false));
+      const filteredResults = results.filter((result) => result !== false);
+
+      if (!filteredResults || !filteredResults.length) {
+        setError("No related results were found with given parameters");
+      } else {
+        setSearchOptions(filteredResults);
+        setError("")
+      }
       setLoading(false);
     };
 
-    if (characterName) {
+    if (characterName && !searchOptions.includes(playerSearch)) {
       checkRegion();
     }
-  }, [characterName]);
+
+    return () => {
+      abortController.abort();
+    };
+  }, [characterName, onSearchError]);
 
   return (
-    <div className="search-options-area">
-      {loading && !errorMsg && !searchOptions.length && (
+    <>
+      <h5 className="error-message">{error}</h5>
+      {loading && (
         <div className="loader">
-          {!searchOptions.length && !errorMsg && (
-            <h5 className="initial-error">{initialFailureMessage}</h5>
-          )}
           <h5 className="loader-msg">
             <i>Searching for viable results...</i>
           </h5>
@@ -86,24 +95,22 @@ export const SearchOptions: React.FC<SimiliarPlayerProps> = (props) => {
           </Spinner>
         </div>
       )}
-      {searchOptions.length && !errorMsg && (
-        <h5 className="options-title">Related characters:</h5>
+      {!loading && searchOptions.length && (
+        <div className="search-options-area">
+          <h5 className="options-title">Possible character matches:</h5>
+          <ul className="options-column">
+            {searchOptions.map((player) => (
+              <li
+                className="search-option"
+                key={player}
+                onClick={() => props.search(player)}
+              >
+                <p>{player}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
       )}
-      {!loading && searchOptions.length ? (
-        <ul className="options-column">
-          {searchOptions.map((player) => (
-            <li
-              className="search-option"
-              key={player}
-              onClick={() => props.search(player)}
-            >
-              <p>{player}</p>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <h5>{errorMsg}</h5>
-      )}
-    </div>
+    </>
   );
 };

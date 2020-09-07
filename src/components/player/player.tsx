@@ -14,6 +14,7 @@ type PlayerProps = {
   reportID: string;
   metrics: React.ReactElement;
   inventory: React.ReactElement;
+  guildName: string;
 };
 
 type Friendly = {
@@ -33,11 +34,12 @@ export const Player: React.FC<PlayerProps> = (props) => {
     initialFriendlyData
   );
 
-  const { playerClass, type, reportID, metrics, inventory, spec } = props;
+  const { playerClass, type, reportID, metrics, inventory, spec, guildName } = props;
 
   const [name] = useContext(PlayerContext).split("/");
 
   React.useEffect(() => {
+    const myAbortController = new AbortController();
     const doFightsReportFetch = async () => {
       try {
         const res = await fetch(
@@ -59,6 +61,9 @@ export const Player: React.FC<PlayerProps> = (props) => {
     if (reportID) {
       doFightsReportFetch();
     }
+    return () => {
+      myAbortController.abort();
+    };
   }, [name, reportID]);
 
   const getFriendlyData = (
@@ -101,6 +106,7 @@ export const Player: React.FC<PlayerProps> = (props) => {
                 <PlayerLabel
                   label={specInfo.alt}
                   icon={specInfo.img}
+                  guild={guildName || ""}
                   playerClass={playerClass}
                 />
                 {metrics}

@@ -1,6 +1,6 @@
 import React from "react";
 import { shallow, mount } from "enzyme";
-import { TabsContainer } from "./tabs-container";
+import { TabsWrapper } from "./tabs-wrapper";
 import { RaidResults } from "../../libs/types";
 
 describe("<TabsContainer/>", () => {
@@ -13,7 +13,7 @@ describe("<TabsContainer/>", () => {
     raids: minRaidResults,
   };
 
-  const shallowWrapper = shallow(<TabsContainer {...minProps} />);
+  const shallowWrapper = shallow(<TabsWrapper {...minProps} />);
 
   it("renders 1 tab when passed one set of incomplete raidResult data", () => {
     expect(shallowWrapper.find("Tab").length).toBe(1);

@@ -27,6 +27,8 @@ export const PlayerHeader: React.FC = ({ children }) => {
   const [name, server, region] = React.useContext(PlayerContext).split("/");
   const playerLink = LinkTopper(name, server, region);
 
+
+
   return (
     <div className="player-header">
       <div className="player-wcraft-link">{playerLink}</div>

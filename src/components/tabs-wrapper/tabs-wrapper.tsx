@@ -4,13 +4,13 @@ import Tab from "react-bootstrap/Tab";
 import { PlayerWrapper } from "../player-wrapper/player-wrapper";
 import { RaidResults } from "../../libs/types";
 import { PlayerContext } from "../../hooks/playerContext";
-import "./tabs-container.css";
+import "./tabs-wrapper.css";
 
-type TabsContainerProps = {
+type TabsWrapperProps = {
   raids: RaidResults[];
 };
 
-export const TabsContainer: React.FC<TabsContainerProps> = ({ raids }) => {
+export const TabsWrapper: React.FC<TabsWrapperProps> = ({ raids }) => {
   const playerSearch = useContext(PlayerContext);
   const getMostRecentValidRaid = (raids: RaidResults[]): string => {
     for (let i = raids.length - 1; i >= 0; i--) {

@@ -6,7 +6,7 @@ import { PlayerContext } from "./hooks/playerContext";
 import Spinner from "react-bootstrap/Spinner";
 import { Raid, RaidResults } from "./libs/types";
 import { WCRAFT_API_URL, WCRAFT_API_KEY } from "./libs/placeholders";
-import { TabsContainer } from "./components/tabs-container/tabs-container";
+import { TabsWrapper } from "./components/tabs-wrapper/tabs-wrapper";
 import { SearchOptions } from "./components/search-options/search-options";
 
 const raids: Raid[] = [
@@ -30,20 +30,14 @@ const raids: Raid[] = [
   },
 ];
 
-const initialPlayerResultsState: RaidResults[] = [
-  {
-    name: "",
-  },
-];
+const relatedSearchesError = "No related results found";
 
 export const App: React.FC = () => {
   const [currentSearch, setCurrentSearch] = React.useState("");
   const [prevSearches, setPrevSearches] = React.useState<string[]>([]);
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState("");
-  const [playerResults, setPlayerResults] = React.useState<RaidResults[]>(
-    initialPlayerResultsState
-  );
+  const [playerResults, setPlayerResults] = React.useState<any[]>([]);
 
   const doParsesFetchForEachRaid = async (raids: Raid[], search: string) => {
     setLoading(true);
@@ -56,7 +50,6 @@ export const App: React.FC = () => {
     });
     const results: RaidResults[] = await Promise.all(raidRankings);
     handleResults(results, search);
-    setLoading(false);
   };
 
   const doParsesFetch = async (baseUrl: string, phases: number, raid: Raid) => {
@@ -74,7 +67,7 @@ export const App: React.FC = () => {
           };
         }
       } catch (error) {
-        setError(error.message);
+        console.log(error.message);
       }
     }
     return { name: raid.name };
@@ -92,12 +85,29 @@ export const App: React.FC = () => {
     } else {
       setError("Valid data for player could not be found");
     }
+    setCurrentSearch(search);
+    setLoading(false);
+  };
+
+
+  const isValidSearch = (userSearch: string) => {
+    console.log(userSearch, prevSearches)
+    const [name, server, region] = userSearch.split("/");
+    if (userSearch === prevSearches[prevSearches.length - 1] && currentSearch !== name) {
+      return false;
+    }
+    if (name && server && region) {
+      setError("");
+      return true;
+    } else {
+      setError("Input data was omitted");
+      setCurrentSearch(userSearch);
+    }
+    return false;
   };
 
   const handleSearch = (search: string) => {
-    setError("");
-    if (search && currentSearch !== search) {
-      setCurrentSearch(search);
+    if (isValidSearch(search)) {
       doParsesFetchForEachRaid(raids, search);
     }
     return;
@@ -120,23 +130,25 @@ export const App: React.FC = () => {
           <span className="sr-only">Loading...</span>
         </Spinner>
       )}
-      {!loading && error && (
-        <SearchOptions
-          playerSearch={currentSearch}
-          search={handleSearch}
-        />
-      )}
-      {!error && playerResults[0].name
-        ? currentSearch && (
-            <PlayerContext.Provider value={currentSearch}>
-              <TabsContainer raids={playerResults} />
-            </PlayerContext.Provider>
-          )
-        : !error && !loading && (
-            <h4 className="welcome-message">
-              <i>Input character/region/server of player to Search</i>
-            </h4>
+      {currentSearch && (
+        <>
+          {error ? (
+            <SearchOptions
+              playerSearch={currentSearch}
+              search={(search) => (setCurrentSearch(""), handleSearch(search))}
+              onSearchError={() =>
+                setError("No character data was found for search")
+              }
+            />
+          ) : (
+            playerResults.length && (
+              <PlayerContext.Provider value={currentSearch}>
+                <TabsWrapper raids={playerResults} />
+              </PlayerContext.Provider>
+            )
           )}
+        </>
+      )}
       <footer className="footer">{`© 2020 Classic Wow Armory`}</footer>
     </div>
   );

@@ -5,15 +5,18 @@ import "./player-label.css";
 type PlayerLabelProps = {
   icon: string;
   label: string;
+  guild:string;
   playerClass: string;
 };
 
 const iconUrl = "https://wow.zamimg.com/images/wow/icons/large/";
 
 export const PlayerLabel: React.FC<PlayerLabelProps> = (props) => {
-  const { icon, label, playerClass } = props;
+  const { icon, label, playerClass, guild } = props;
   const [name, server, region] = React.useContext(PlayerContext).split("/");
   const location = `${server} / ${region === "EU" ? region : "NA"}`;
+
+  const guildLabel = guild ? `<${guild}>` : "";
 
   return (
     <div className="player-label">
@@ -26,7 +29,7 @@ export const PlayerLabel: React.FC<PlayerLabelProps> = (props) => {
         <h1
           className="username"
           id={`player-class-${playerClass}`}
-        >{`${name.toUpperCase()}`}</h1>
+        >{`${name.toUpperCase()} ${guildLabel}`}</h1>
         {icon && (
           <div className="sub-label">
             <h3 id="player-location" className={`player-class-${playerClass}`}>

@@ -31,6 +31,14 @@
   transition-duration: 15s;
 }
 
+
+@media screen and (max-width: 600px) {
+  .search-options-area {
+    min-width: 90vw;
+  }
+}
+
+
 .loader-msg {
   font-family: "Open Sans", sans-serif;
   font-weight: 300;

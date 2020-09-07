@@ -25,6 +25,7 @@ export const PercentileContainer: React.FC<PercentileContainerProps> = (
   const [percentile, setPercentile] = React.useState(-1);
 
   React.useEffect(() => {
+    const abortController = new AbortController();
     const doParsesFetch = async () => {
       try {
         const res = await fetch(
@@ -41,6 +42,9 @@ export const PercentileContainer: React.FC<PercentileContainerProps> = (
     };
     if (zoneID && phaseID) {
       doParsesFetch();
+    }
+    return () => {
+      abortController.abort();
     }
   }, [player, zoneID, phaseID]);
 

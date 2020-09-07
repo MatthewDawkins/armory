@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useContext } from "react";
 import { SearchHistory } from "../search-history/search-history";
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
@@ -15,11 +15,19 @@ const serversByRegion = require("../../libs/servers.json");
 
 export const Searchbar: React.FC<SearchbarProps> = (props) => {
   const [nameInput, setNameInput] = React.useState("");
-  const [serverInput, setServerInput] = React.useState("Server");
-  const [regionInput, setRegionInput] = React.useState("Region");
+  const [serverInput, setServerInput] = React.useState("");
+  const [regionInput, setRegionInput] = React.useState("");
   const [isOpen, setIsOpen] = React.useState(false);
 
+
+
   const node = useRef<HTMLHeadingElement>(null);
+
+  const formatName = (name: string): string => {
+    return (
+      name.charAt(0).toUpperCase() + name.slice(1, name.length).toLowerCase()
+    );
+  };
 
   React.useEffect(() => {
     document.addEventListener("mousedown", handleClick);
@@ -37,9 +45,14 @@ export const Searchbar: React.FC<SearchbarProps> = (props) => {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    if (regionInput.length && nameInput.length && serverInput.length) {
-      const search = `${formatName(nameInput)}/${serverInput.split(" ").join("-")}/${regionInput === "EU" ? regionInput : "US"}`;
+    console.log(nameInput, serverInput, regionInput)
+    if (nameInput && regionInput !=="Region" && serverInput) {
+      const search = `${formatName(nameInput)}/${serverInput
+        .split(" ")
+        .join("-")}/${regionInput === "EU" ? regionInput : "US"}`;
       props.search(search);
+    } else {
+      props.search(formatName(nameInput));
     }
     setIsOpen(false);
   };
@@ -50,12 +63,6 @@ export const Searchbar: React.FC<SearchbarProps> = (props) => {
       handleSubmit(e);
     }
     return;
-  };
-
-  const formatName = (name: string): string => {
-    return (
-      name.charAt(0).toUpperCase() + name.slice(1, name.length).toLowerCase()
-    );
   };
 
   return (
@@ -72,10 +79,10 @@ export const Searchbar: React.FC<SearchbarProps> = (props) => {
         <FormControl
           size="sm"
           as="select"
-          value={regionInput}
-          onChange={(e) => e && setRegionInput(e.target.value)}
+          value={regionInput || "Region"}
+          onChange={(e) => e && (setRegionInput(e.target.value), setServerInput("Server"))}
         >
-          <option value="" key="default-region">
+          <option value="Region" key="default-region">
             Region
           </option>
           {Object.keys(serversByRegion).map((region: string, idx: number) => (
@@ -87,13 +94,14 @@ export const Searchbar: React.FC<SearchbarProps> = (props) => {
         <FormControl
           size="sm"
           as="select"
-          value={serverInput}
+          value={serverInput || "Server"}
           onChange={(e) => e && setServerInput(e.target.value)}
         >
-          <option value="" key="default-server">
+          <option value="Server" key="default-server">
             Server
           </option>
-          {regionInput !== "Region" &&
+          {regionInput &&
+            regionInput !== "Region" &&
             serversByRegion[regionInput].map((server: string, idx: number) => (
               <option value={server} key={`server-${idx}`}>
                 {server}

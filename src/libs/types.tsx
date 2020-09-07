@@ -6,6 +6,7 @@ export type Report = {
   spec: string;
   reportID: string;
   encounterName: string;
+  encounterID: number;
   startTime: number;
 };
 

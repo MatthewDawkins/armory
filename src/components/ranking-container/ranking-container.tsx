@@ -9,6 +9,7 @@ type RankingContainerProps = {
   rankingMetric: string;
   encounterID: number;
   phaseID: number;
+  onValidReport: (report: any) => void;
 };
 
 type PlayerRanking = {
@@ -17,7 +18,7 @@ type PlayerRanking = {
 };
 
 export const RankingContainer: React.FC<RankingContainerProps> = (props) => {
-  const { classID, rankingMetric, encounterID, phaseID } = props;
+  const { classID, rankingMetric, encounterID, phaseID, onValidReport } = props;
   const [name, server, region] = useContext(PlayerContext).split("/");
 
   const [loading, setLoading] = React.useState(true);
@@ -26,7 +27,7 @@ export const RankingContainer: React.FC<RankingContainerProps> = (props) => {
 
   React.useEffect(() => {
     setLoading(true);
-
+    const abortController = new AbortController();
     const doRankingsFetch = async () => {
       var pageCount = 1;
 
@@ -56,6 +57,10 @@ export const RankingContainer: React.FC<RankingContainerProps> = (props) => {
     if (name) {
       doRankingsFetch();
     }
+
+    return () => {
+      abortController.abort();
+    };
   }, [
     name,
     region,
@@ -72,7 +77,11 @@ export const RankingContainer: React.FC<RankingContainerProps> = (props) => {
     rankings: PlayerRanking[]
   ): number => {
     let rankingIndex = rankings.findIndex((ranking) => ranking.name === name);
-    return rankingIndex === -1 ? rankingIndex : rankingIndex + 1;
+    if (rankingIndex === -1) {
+      return rankingIndex;
+    }
+    onValidReport(rankings[rankingIndex]);
+    return rankingIndex + 1;
   };
 
   const getRankingMedal = (ranking: number) =>
@@ -88,18 +97,22 @@ export const RankingContainer: React.FC<RankingContainerProps> = (props) => {
 
   return (
     <div className="rankings-wrapper">
-      {!loading && ranking !== -1 ? (
-        <h5 className="ranking">
-          {ranking < 251 && (
-            <img
-              className="ranking-medal-icon"
-              src={`https://assets.rpglogs.com/img/${medal}.png`}
-              alt="ranking-medal"
-            />
-          )}
-          {ranking}
-        </h5>
-      ) : loading && !error ? (
+      {!loading &&
+        (ranking !== -1 ? (
+          <h5 className="ranking">
+            {ranking < 251 && (
+              <img
+                className="ranking-medal-icon"
+                src={`https://assets.rpglogs.com/img/${medal}.png`}
+                alt="ranking-medal"
+              />
+            )}
+            {ranking}
+          </h5>
+        ) : (
+          error && <h5 className="error-ranking">{"< 500"}</h5>
+        ))}
+      {loading && (
         <div className="spinner-wrapper">
           <Spinner
             animation="border"
@@ -110,8 +123,6 @@ export const RankingContainer: React.FC<RankingContainerProps> = (props) => {
             <span className="sr-only">Searching for ranking results...</span>
           </Spinner>
         </div>
-      ) : (
-        error && <h5 className="error-ranking">{"< 500"}</h5>
       )}
     </div>
   );

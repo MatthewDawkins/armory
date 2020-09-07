@@ -1,6 +1,6 @@
 .search-results {
   max-width: 1200px;
-  width: 57%;
+  min-width: 57%;
   height: 100%;
   margin-top: -34px;
 }

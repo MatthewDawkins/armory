@@ -17,6 +17,11 @@ type PlayerWrapperProps = {
 export const PlayerWrapper: React.FC<PlayerWrapperProps> = ({
   raid,
 }: PlayerWrapperProps) => {
+  const [
+    playerReportFromRankings,
+    setPlayerReportFromRankings,
+  ] = React.useState<any>({});
+
   const validateIsSpec = (playerRankingsSpec: string): boolean =>
     !(
       playerRankingsSpec === "DPS" ||
@@ -46,19 +51,23 @@ export const PlayerWrapper: React.FC<PlayerWrapperProps> = ({
     return classType ? classType.id : -1;
   };
 
-  const getCurrentGearReport = (rankingsReports: Report[]) => {
-    let startTime = 0;
-    let validReport;
-    rankingsReports.forEach((report) => {
-      if (report.gear.find((item: Gear) => item.name !== "Unknown Item")) {
-        const currentStartTime = report.startTime;
-        if (currentStartTime > startTime) {
-          startTime = currentStartTime;
-          validReport = report;
-        }
+  const getCurrentGearReport = (rankingsReports: Report[]): any => {
+    for (let i = rankingsReports.length - 1; i >= 0; i--) {
+      console.log("rankingsReports:", rankingsReports);
+      if (
+        rankingsReports[i].gear.find(
+          (item: Gear) => item.name !== "Unknown Item"
+        )
+      ) {
+        return rankingsReports[i];
       }
-    });
-    return validReport ? validReport : { startTime: 0, gear: [] };
+    }
+    return { startTime: 0, gear: [] };
+  };
+
+  const handleReport = (rankingReport: any) => {
+    console.log(rankingReport);
+    setPlayerReportFromRankings(rankingReport);
   };
 
   const playerType = getPlayerType(raid.reports);
@@ -71,6 +80,7 @@ export const PlayerWrapper: React.FC<PlayerWrapperProps> = ({
       phaseID={raid.phaseID}
       classID={getClassId(raid.reports[0].class)}
       rankingMetric={playerMetric}
+      onValidReport={handleReport}
     />
   );
 
@@ -92,6 +102,7 @@ export const PlayerWrapper: React.FC<PlayerWrapperProps> = ({
       spec={validateIsSpec(raid.reports[0].spec) ? raid.reports[0].spec : ""}
       playerClass={raid.reports[0].class}
       reportID={raid.reports[0].reportID}
+      guildName={playerReportFromRankings.guildName}
       metrics={
         <PlayerMetrics
           left={leftMetric}

@@ -40,6 +40,7 @@ export const PlayerContainer: React.FC<PlayerContainerProps> = (props) => {
   } = props;
 
   React.useEffect(() => {
+    const myAbortController = new AbortController();
     const classSpecs = classSpecIcons.filter((spec) =>
       spec.alt.includes(playerClass)
     );
@@ -68,12 +69,16 @@ export const PlayerContainer: React.FC<PlayerContainerProps> = (props) => {
           setSpecInfo(specInfo || initialSpecInfo);
         }
       } catch (error) {
+        console.log(error);
       }
     };
 
     if (playerID && type === "DPS") {
       doEventsReportFetch();
     }
+    return () => {
+      myAbortController.abort();
+    };
   }, [playerID, playerClass, type, reportID, label]);
 
   const getTalentUsed = (events: CombatEvent[], specs: any[]) => {
