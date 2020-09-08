@@ -44,6 +44,6 @@ Also, be sure to have `git` available in your PATH, `npm` might need it (You can
 
 ### Feedback/Support
 Feel free to contact us at:
-    admin@armory.live
-    felorea@armory.live
+    - admin@armory.live
+    - felorea@armory.live
 
