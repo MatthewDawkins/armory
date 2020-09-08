@@ -5,7 +5,7 @@ Classic Wow Armory is a Warcraftlogs API wrapper application for displaying char
 
 Node and npm are required for development.
 
-- #### Node installation on Windows
+- ##### Node installation on Windows
 
   Just go on [official Node.js website](https://nodejs.org/) and download the installer.
 Also, be sure to have `git` available in your PATH, `npm` might need it (You can find git [here](https://git-scm.com/)).
