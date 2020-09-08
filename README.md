@@ -25,8 +25,6 @@ If you need to update `npm`, run the following:
 
     $ npm install npm -g
 
-###
-
 ## Installation
 
     $ git clone https://github.com/MatthewDawkins/armory
@@ -40,7 +38,6 @@ If you need to update `npm`, run the following:
 ## Simple build for production
 
     $ npm run build
-
 
 ## Feedback/Support
 
