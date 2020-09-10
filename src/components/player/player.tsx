@@ -1,19 +1,20 @@
-import React from "react";
+import React, { useContext } from "react";
 import { PlayerHeader } from "../player-header/player-header";
 import { PlayerLabel } from "../player-label/player-label";
 import { WCRAFT_API_URL, WCRAFT_API_KEY } from "../../libs/placeholders";
+import { PlayerContext } from "../../hooks/playerContext";
 import { PlayerContainer } from "../player-container/player-container";
 import { SpecInfo } from "../../libs/types";
 import "./player.css";
 
 type PlayerProps = {
-  player: string;
   playerClass: string;
   type: string;
   spec: string;
   reportID: string;
   metrics: React.ReactElement;
   inventory: React.ReactElement;
+  guildName: string;
 };
 
 type Friendly = {
@@ -33,28 +34,29 @@ export const Player: React.FC<PlayerProps> = (props) => {
     initialFriendlyData
   );
 
-  const [error, setError] = React.useState("");
-
   const {
-    player,
     playerClass,
     type,
     reportID,
     metrics,
     inventory,
     spec,
+    guildName,
   } = props;
 
-  const [name] = player.split("/");
+  const [name] = useContext(PlayerContext).split("/");
 
   React.useEffect(() => {
+    const abortController = new AbortController();
     const doFightsReportFetch = async () => {
       try {
         const res = await fetch(
           `${WCRAFT_API_URL}/report/fights/${reportID}?&${WCRAFT_API_KEY}`
         );
         const results = await res.json();
-        const playerFriendlyResults = getFriendlyData(results.friendlies, name);
+        const playerFriendlyResults = results
+          ? getFriendlyData(results.friendlies, name)
+          : false;
         if (playerFriendlyResults) {
           setFriendlyData((prev) => ({
             ...prev,
@@ -63,12 +65,15 @@ export const Player: React.FC<PlayerProps> = (props) => {
           }));
         }
       } catch (error) {
-        setError(error.message);
+        console.log(error);
       }
     };
     if (reportID) {
       doFightsReportFetch();
     }
+    return () => {
+      abortController.abort();
+    };
   }, [name, reportID]);
 
   const getFriendlyData = (
@@ -85,7 +90,7 @@ export const Player: React.FC<PlayerProps> = (props) => {
     playerType: string,
     spec: string,
     playerClass: string
-  ) => {
+  ): string => {
     return playerType === "Healer" || playerType === "Tank"
       ? `${playerClass} ${playerType}`
       : `${spec} ${playerClass}`;
@@ -102,14 +107,16 @@ export const Player: React.FC<PlayerProps> = (props) => {
         renderPlayerContainer={(specInfo: SpecInfo) => (
           <div
             id="background-image"
-            className={`background-${specInfo.alt.split(" ").join("-")}`}
+            className={`background-${
+              specInfo.alt.split(" ").join("-") || playerClass
+            }`}
           >
             <div className="player-results">
-              <PlayerHeader playerSearch={player}>
+              <PlayerHeader>
                 <PlayerLabel
-                  playerSearch={player}
                   label={specInfo.alt}
                   icon={specInfo.img}
+                  guild={guildName || ""}
                   playerClass={playerClass}
                 />
                 {metrics}

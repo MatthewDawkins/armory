@@ -1,20 +1,21 @@
 export type Report = {
-  gear: GearItem[];
-  class: PlayerClass;
+  gear: Gear[] | [];
+  class: string;
   rank: number;
-  type: PlayerType;
+  type: string;
   spec: string;
   reportID: string;
   encounterName: string;
-  player: string;
+  encounterID: number;
   startTime: number;
 };
 
-export type RaidData = {
+export type RaidResults = {
   name: string;
   raidID?: number;
   phaseID?: number;
-  results?: Report[];
+  reports?: Report[];
+  encounterID?: number;
 };
 
 
@@ -29,12 +30,12 @@ export type ValidRaidData = {
   raidID: number;
   phaseID: number;
   encounterID: number;
-  results: Report[];
+  reports: Report[];
 }
 
 export type PlayerType = "Healer" | "DPS" | "Tank";
 
-export type GearItem = {
+export type Gear = {
   name: string;
   quality: string;
   icon: string;

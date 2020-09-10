@@ -1,6 +1,6 @@
 .searchbar {
   min-height: 35px;
-  opacity: .97;
+  opacity: 0.97;
   display: flex;
   justify-content: center;
   align-self: center;
@@ -9,6 +9,7 @@
   width: 40%;
   max-width: 640px;
   z-index: 999;
+
 }
 
 @media screen and (max-width: 600px) {
@@ -19,6 +20,7 @@
 
 .input-group .form-control {
   color: grey;
+  border: 1px solid darkblue;
 }
 
 .btn-primary {

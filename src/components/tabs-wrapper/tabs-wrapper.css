@@ -1,13 +1,13 @@
 .search-results {
   max-width: 1200px;
-  width: 57%;
+  min-width: 57%;
   height: 100%;
   margin-top: -34px;
 }
 
 .nav-tabs {
   flex-direction: row-reverse;
-  opacity: .95;
+  opacity: 0.95;
   border-bottom: 2px inset;
 }
 
@@ -47,7 +47,7 @@
 
 @media screen and (max-width: 600px) {
   .search-results {
-    min-width: 100%;
-    margin-top: 2px;
+    width: 95%;
+    margin-top: 1px;
   }
 }

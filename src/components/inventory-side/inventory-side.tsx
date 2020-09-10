@@ -1,10 +1,10 @@
 import React from "react";
 import "./inventory-side.css";
 import { Item } from "../item/item";
-import { GearItem } from "../../libs/types";
+import { Gear } from "../../libs/types";
 
 type InventorySideProps = {
-  items: GearItem[];
+  items: Gear[];
   side: "right" | "left";
 };
 

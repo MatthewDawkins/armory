@@ -2,11 +2,12 @@
   font-size: 29px;
   font-family: "Open Sans", sans-serif;
   color: rgb(225, 220, 220);
-  margin: 10px 0 0 10px;
+  margin: 0 0 0 10px;
+  width: fit-content;
 }
 
 .ranking-wrapper {
-  margin: auto 0px auto 10px;
+  margin: auto 5px auto 10px;
 }
 
 .ranking-medal-icon {
@@ -16,6 +17,14 @@
   padding-bottom: 3px;
 }
 
+.spinner-wrapper {
+  padding-left: 15px;
+  width: 100%;
+  transition-delay: 15s;
+}
+
 .error-ranking {
   margin-left: 15px;
+  font-size: 29px;
+  color: grey;
 }

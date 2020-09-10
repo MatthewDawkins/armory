@@ -1,10 +1,10 @@
 import React from "react";
 import { PercentileCircle } from "../percentile-circle/percentile-circle";
+import { PlayerContext } from "../../hooks/playerContext";
 import { WCRAFT_API_URL, WCRAFT_API_KEY } from "../../libs/placeholders";
 import "./percentile-container.css";
 
 type PercentileContainerProps = {
-  player: string;
   zoneID: number;
   phaseID: number;
 };
@@ -17,20 +17,25 @@ type ParseReport = {
 export const PercentileContainer: React.FC<PercentileContainerProps> = (
   props
 ) => {
-  const { player, zoneID, phaseID } = props;
+  const { zoneID, phaseID } = props;
+  const player = React.useContext(PlayerContext);
 
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState("");
   const [percentile, setPercentile] = React.useState(-1);
 
   React.useEffect(() => {
+    setLoading(true);
+    const abortController = new AbortController();
     const doParsesFetch = async () => {
       try {
         const res = await fetch(
           `${WCRAFT_API_URL}/parses/character/${player}?&zone=${zoneID}&partition=${phaseID}&timeframe=historical&${WCRAFT_API_KEY}`
         );
         const parsesResults = await res.json();
-        setPercentile(getAvg(getBestPercentiles(parsesResults)));
+        const bestPercentiles = getBestPercentiles(parsesResults);
+        const bestAvg = getAvg(bestPercentiles);
+        setPercentile(bestAvg);
       } catch (error) {
         setError(error.message);
       }
@@ -39,16 +44,21 @@ export const PercentileContainer: React.FC<PercentileContainerProps> = (
     if (zoneID && phaseID) {
       doParsesFetch();
     }
+    return () => {
+      abortController.abort();
+    };
   }, [player, zoneID, phaseID]);
 
   const getBestPercentiles = (parses: ParseReport[]): number[] => {
     const bestPercentiles = new Map();
     parses.forEach((parse) => {
-      const prev = bestPercentiles.has(parse.encounterID)
-        ? bestPercentiles.get(parse.encounterID)
-        : 0;
-      if (parse.percentile > prev) {
-        bestPercentiles.set(parse.encounterID, parse.percentile);
+      if (parse.encounterID !== 713) {
+        const prev = bestPercentiles.has(parse.encounterID)
+          ? bestPercentiles.get(parse.encounterID)
+          : 0;
+        if (parse.percentile > prev) {
+          bestPercentiles.set(parse.encounterID, parse.percentile);
+        }
       }
     });
     return Array.from(bestPercentiles.values());
@@ -69,7 +79,7 @@ export const PercentileContainer: React.FC<PercentileContainerProps> = (
           <PercentileCircle percentile={percentile} />
         </div>
       ) : (
-        error && <h5>An error occured when rendering percentiles</h5>
+        error && <h5>N/A</h5>
       )}
     </div>
   );

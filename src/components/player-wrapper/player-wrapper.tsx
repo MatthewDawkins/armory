@@ -5,17 +5,22 @@ import { PercentileContainer } from "../percentile-container/percentile-containe
 import { Inventory } from "../inventory/inventory";
 import { Timestamp } from "../timestamp/timestamp";
 import { RankingContainer } from "../ranking-container/ranking-container";
-import { GearItem, Report, ValidRaidData } from "../../libs/types";
+import { Gear, Report, ValidRaidData } from "../../libs/types";
+import "./player-wrapper.css";
 
 const playerClasses = require("../../libs/classes.json");
 
 type PlayerWrapperProps = {
-  playerInfo: string;
   raid: ValidRaidData;
 };
 
-export const PlayerWrapper: React.FC<PlayerWrapperProps> = (props) => {
-  const { playerInfo, raid } = props;
+export const PlayerWrapper: React.FC<PlayerWrapperProps> = ({
+  raid,
+}: PlayerWrapperProps) => {
+  const [
+    playerReportFromRankings,
+    setPlayerReportFromRankings,
+  ] = React.useState<any>({});
 
   const validateIsSpec = (playerRankingsSpec: string): boolean =>
     !(
@@ -39,79 +44,72 @@ export const PlayerWrapper: React.FC<PlayerWrapperProps> = (props) => {
     return validateIsSpec(playerTypeOrSpec) ? "DPS" : playerTypeOrSpec;
   };
 
-  const getCurrentGearReport = (rankingsReports: any[]): Report | false => {
-    let startTime = 0;
-    let validReport;
-    rankingsReports.forEach((report) => {
-      if (report.gear.find((item: any) => item.name !== "Unknown Item")) {
-        const currentStartTime = report.startTime;
-        if (currentStartTime > startTime) {
-          startTime = currentStartTime;
-          validReport = report;
-        }
-      }
-    });
-    return validReport ? validReport : false;
-  };
-
-  const inventoryReport = getCurrentGearReport(raid.results);
-  const InventoryWrapper = (
-    <div className="player-inventory">
-      <Timestamp
-        milliseconds={inventoryReport ? inventoryReport.startTime : 0}
-      />
-      <Inventory
-        items={
-          inventoryReport
-            ? inventoryReport.gear.map((item: GearItem) =>
-                item.name === "Unknown Item" ? 0 : item
-              )
-            : []
-        }
-      />
-    </div>
-  );
-
-  const PercentileWrapper = (
-    <PercentileContainer
-      zoneID={raid.raidID}
-      phaseID={raid.phaseID}
-      player={playerInfo}
-    />
-  );
-
-  const getClassId = (playerClass: string) => {
+  const getClassId = (playerClass: string): number => {
     let classType = playerClasses.find(
       (classType: any) => classType.name === playerClass
     );
     return classType ? classType.id : -1;
   };
 
-  const playerType = getPlayerType(raid.results);
-  const playerMetric = playerType === "Healer" ? "hps" : "dps";
+  const getCurrentGearReport = (rankingsReports: Report[]): any => {
+    for (let i = rankingsReports.length - 1; i >= 0; i--) {
+      if (
+        rankingsReports[i].gear.find(
+          (item: Gear) => item.name !== "Unknown Item"
+        )
+      ) {
+        return rankingsReports[i];
+      }
+    }
+    return { startTime: 0, gear: [] };
+  };
 
-  const RankingWrapper = (
+  const handleReport = (rankingReport: any) => {
+    setPlayerReportFromRankings(rankingReport);
+  };
+
+  const playerType = getPlayerType(raid.reports);
+  const playerMetric = playerType === "Healer" ? "hps" : "dps";
+  const inventoryReport = getCurrentGearReport(raid.reports);
+
+  const leftMetric: React.ReactElement = (
     <RankingContainer
-      player={playerInfo}
       encounterID={raid.encounterID}
       phaseID={raid.phaseID}
-      classID={getClassId(raid.results[0].class)}
+      classID={getClassId(raid.reports[0].class)}
       rankingMetric={playerMetric}
+      onValidReport={handleReport}
     />
+  );
+
+  const reportInventory: React.ReactElement = (
+    <div className="player-inventory">
+      <Timestamp milliseconds={inventoryReport.startTime} />
+      <Inventory
+        items={inventoryReport.gear.map((item: Gear) =>
+          item.name === "Unknown Item" ? 0 : item
+        )}
+      />
+    </div>
   );
 
   return (
     <Player
-      key={playerInfo}
-      player={playerInfo}
-      metrics={
-        <PlayerMetrics left={RankingWrapper} right={PercentileWrapper} />
-      }
-      inventory={InventoryWrapper}
+      key={raid.reports[0].encounterName}
       type={playerType}
-      spec={validateIsSpec(raid.results[0].spec) ? raid.results[0].spec : ""}
-      reportID={raid.results[0].reportID}
-      playerClass={raid.results[0].class}
+      spec={validateIsSpec(raid.reports[0].spec) ? raid.reports[0].spec : ""}
+      playerClass={raid.reports[0].class}
+      reportID={raid.reports[0].reportID}
+      guildName={playerReportFromRankings.guildName}
+      metrics={
+        <PlayerMetrics
+          left={leftMetric}
+          right={
+            <PercentileContainer zoneID={raid.raidID} phaseID={raid.phaseID} />
+          }
+        />
+      }
+      inventory={reportInventory}
     />
   );
 };

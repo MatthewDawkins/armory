@@ -34,7 +34,7 @@ export const PercentileCircle: React.FC<PercentileCircleProps> = ({
         id="circular-chart"
         className={`circular-chart-${getBracket(percentile)}`}
       >
-        <path className="circle-bg" d={diameter} />
+        <path className="circle-background" d={diameter} />
         <path
           className="circle"
           strokeDasharray={`${Math.floor(percentile)}, 100`}

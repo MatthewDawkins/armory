@@ -1,8 +1,8 @@
 .item-wrapper {
   display: flex;
   align-items: center;
-  height: 64px;
-  width: 64x;
+  height: 60px;
+  width: 62x;
   padding: 2px;
   z-index: 1000;
 }

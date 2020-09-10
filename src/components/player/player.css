@@ -80,7 +80,10 @@
   background-image: url("https://www.scrollsoflore.com/gallery/albums/wow_talents/hunter_beastmastery.jpg");
 }
 
-.background-Feral-Druid-Tank,
+.background-Druid-Tank {
+  background-image: url("https://www.scrollsoflore.com/gallery/albums/wow_talents/druid_feral.jpg");
+}
+
 .background-Feral-Druid-DPS {
   background-image: url("https://www.scrollsoflore.com/gallery/albums/wow_talents/druid_feral.jpg");
 }
@@ -142,6 +145,11 @@
 .background-Fire-Mage {
   background-image: url("https://www.scrollsoflore.com/gallery/albums/wow_talents/mage_fire.jpg");
 }
+
+.background-Mage {
+  background-image: url("https://www.scrollsoflore.com/gallery/albums/wow_talents/mage_frost.jpg");
+}
+
 .background-Frost-Mage {
   background-image: url("https://www.scrollsoflore.com/gallery/albums/wow_talents/mage_frost.jpg");
 }
