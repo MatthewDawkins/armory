@@ -33,6 +33,7 @@ export const Player: React.FC<PlayerProps> = (props) => {
   const [friendlyData, setFriendlyData] = React.useState<Friendly>(
     initialFriendlyData
   );
+  const [loading, setLoading] = React.useState(true);
 
   const {
     playerClass,
@@ -47,6 +48,7 @@ export const Player: React.FC<PlayerProps> = (props) => {
   const [name] = useContext(PlayerContext).split("/");
 
   React.useEffect(() => {
+    setLoading(true);
     const abortController = new AbortController();
     const doFightsReportFetch = async () => {
       try {
@@ -67,6 +69,7 @@ export const Player: React.FC<PlayerProps> = (props) => {
       } catch (error) {
         console.log(error);
       }
+      setLoading(false);
     };
     if (reportID) {
       doFightsReportFetch();
@@ -98,34 +101,36 @@ export const Player: React.FC<PlayerProps> = (props) => {
 
   return (
     <div className="player-wrapper">
-      <PlayerContainer
-        type={type}
-        playerClass={playerClass}
-        reportID={reportID}
-        label={getPlayerLabel(type, spec, playerClass)}
-        playerID={friendlyData.id}
-        renderPlayerContainer={(specInfo: SpecInfo) => (
-          <div
-            id="background-image"
-            className={`background-${
-              specInfo.alt.split(" ").join("-") || playerClass
-            }`}
-          >
-            <div className="player-results">
-              <PlayerHeader>
-                <PlayerLabel
-                  label={specInfo.alt}
-                  icon={specInfo.img}
-                  guild={guildName || ""}
-                  playerClass={playerClass}
-                />
-                {metrics}
-              </PlayerHeader>
-              <div className="player-inventory">{inventory}</div>
+      {(!loading || name) && (
+        <PlayerContainer
+          type={type}
+          playerClass={playerClass}
+          reportID={reportID}
+          label={getPlayerLabel(type, spec, playerClass)}
+          playerID={friendlyData.id}
+          renderPlayerContainer={(specInfo: SpecInfo) => (
+            <div
+              id="background-image"
+              className={`background-${
+                specInfo.alt.split(" ").join("-") || playerClass
+              }`}
+            >
+              <div className="player-results">
+                <PlayerHeader>
+                  <PlayerLabel
+                    label={specInfo.alt}
+                    icon={specInfo.img}
+                    guild={guildName || ""}
+                    playerClass={playerClass}
+                  />
+                  {metrics}
+                </PlayerHeader>
+                <div className="player-inventory">{inventory}</div>
+              </div>
             </div>
-          </div>
-        )}
-      />
+          )}
+        />
+      )}
     </div>
   );
 };

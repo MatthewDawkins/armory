@@ -30,6 +30,7 @@ const initialSpecInfo: SpecInfo = {
 export const PlayerContainer: React.FC<PlayerContainerProps> = (props) => {
   const [specInfo, setSpecInfo] = React.useState<SpecInfo>(initialSpecInfo);
 
+
   const {
     playerID,
     reportID,

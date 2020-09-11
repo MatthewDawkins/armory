@@ -42,6 +42,7 @@ export const Searchbar: React.FC<SearchbarProps> = (props) => {
   };
 
   const handleSubmit = (e: any) => {
+    setIsOpen(false);
     e.preventDefault();
     if (nameInput && regionInput !== "Region" && serverInput) {
       const search = `${formatName(nameInput)}/${serverInput
@@ -51,7 +52,6 @@ export const Searchbar: React.FC<SearchbarProps> = (props) => {
     } else {
       props.search(formatName(nameInput));
     }
-    setIsOpen(false);
   };
 
   const handleSubmitEnter = (e: any) => {

@@ -145,7 +145,9 @@ export const App: React.FC = () => {
         </>
       )}
       {!currentSearch && (
-        <h5 className="greeting"><i>Include all character parameters for faster search results!</i></h5>
+        <h5 className="greeting">
+          <i>Include all character parameters for faster search results!</i>
+        </h5>
       )}
       <footer className="footer">{`© 2020 Classic Wow Armory`}</footer>
     </div>
