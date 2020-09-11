@@ -25,11 +25,8 @@ export const RankingContainer: React.FC<RankingContainerProps> = (props) => {
   const [error, setError] = React.useState("");
   const [ranking, setRanking] = React.useState(-1);
 
-
   React.useEffect(() => {
-    setLoading(true);
     const abortController = new AbortController();
-
     let hasMorePages = true;
     const doRankingsFetch = async () => {
       var pageCount = 1;
@@ -41,7 +38,7 @@ export const RankingContainer: React.FC<RankingContainerProps> = (props) => {
           );
           const rankingsResults = await res.json();
           hasMorePages = rankingsResults.hasMorePages;
-          console.log(rankingsResults, encounterID)
+          console.log(rankingsResults, encounterID);
           const playerRanking = getPlayerRanking(
             name,
             rankingsResults.rankings
@@ -62,7 +59,7 @@ export const RankingContainer: React.FC<RankingContainerProps> = (props) => {
       if (!error) {
         setError("No ranking data for character was found");
       }
-      console.log(ranking, error)
+      console.log(ranking, error);
     };
 
     if (name) {

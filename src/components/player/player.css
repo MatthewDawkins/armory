@@ -69,7 +69,13 @@
   background-image: url("https://www.scrollsoflore.com/gallery/albums/wow_talents/rogue_combat.jpg");
 }
 
+.background-Rogue {
+  background-image: url("https://www.scrollsoflore.com/gallery/albums/wow_talents/rogue_combat.jpg");
+}
 .background-Marksmanship-Hunter {
+  background-image: url("https://www.scrollsoflore.com/gallery/albums/wow_talents/hunter_marksmanship.jpg");
+}
+.background-Hunter {
   background-image: url("https://www.scrollsoflore.com/gallery/albums/wow_talents/hunter_marksmanship.jpg");
 }
 
@@ -79,7 +85,9 @@
 .background-BeastMastery-Hunter {
   background-image: url("https://www.scrollsoflore.com/gallery/albums/wow_talents/hunter_beastmastery.jpg");
 }
-
+.background-Druid {
+  background-image: url("https://www.scrollsoflore.com/gallery/albums/wow_talents/druid_feral.jpg");
+}
 .background-Druid-Tank {
   background-image: url("https://www.scrollsoflore.com/gallery/albums/wow_talents/druid_feral.jpg");
 }
@@ -97,6 +105,9 @@
 }
 
 .background-Affliction-Warlock {
+  background-image: url("https://www.scrollsoflore.com/gallery/albums/wow_talents/warlock_affliction.jpg");
+}
+.background-Warlock {
   background-image: url("https://www.scrollsoflore.com/gallery/albums/wow_talents/warlock_affliction.jpg");
 }
 .background-Demonology-Warlock {
@@ -125,6 +136,9 @@
 .background-Paladin-Tank {
   background-image: url("https://www.scrollsoflore.com/gallery/albums/wow_talents/paladin_protection.jpg");
 }
+.background-Paladin {
+  background-image: url("https://www.scrollsoflore.com/gallery/albums/wow_talents/paladin_holy.jpg");
+}
 
 .background-Paladin-Healer {
   background-image: url("https://www.scrollsoflore.com/gallery/albums/wow_talents/paladin_holy.jpg");
@@ -139,6 +153,9 @@
 }
 
 .background-Arcane-Mage {
+  background-image: url("https://www.scrollsoflore.com/gallery/albums/wow_talents/mage_arcane.jpg");
+}
+.background-Mage {
   background-image: url("https://www.scrollsoflore.com/gallery/albums/wow_talents/mage_arcane.jpg");
 }
 
@@ -163,5 +180,9 @@
 }
 
 .background-Enhancement-Shaman {
+  background-image: url("https://www.scrollsoflore.com/gallery/albums/wow_talents/shaman_enhancement.jpg");
+}
+
+.background-Shaman {
   background-image: url("https://www.scrollsoflore.com/gallery/albums/wow_talents/shaman_enhancement.jpg");
 }
