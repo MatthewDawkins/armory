@@ -29,6 +29,7 @@ const initialSpecInfo: SpecInfo = {
 
 export const PlayerContainer: React.FC<PlayerContainerProps> = (props) => {
   const [specInfo, setSpecInfo] = React.useState<SpecInfo>(initialSpecInfo);
+  const [loading, setLoading] = React.useState<boolean>(true);
 
   const {
     playerID,
@@ -71,6 +72,7 @@ export const PlayerContainer: React.FC<PlayerContainerProps> = (props) => {
       } catch (error) {
         console.log(error);
       }
+      setLoading(false)
     };
 
     if (playerID && type === "DPS") {

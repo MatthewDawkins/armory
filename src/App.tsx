@@ -8,6 +8,7 @@ import { Raid, RaidResults } from "./libs/types";
 import { WCRAFT_API_URL, WCRAFT_API_KEY } from "./libs/placeholders";
 import { TabsWrapper } from "./components/tabs-wrapper/tabs-wrapper";
 import { SearchOptions } from "./components/search-options/search-options";
+import { Helmet } from "react-helmet";
 
 const raids: Raid[] = [
   {
@@ -114,6 +115,13 @@ export const App: React.FC = () => {
 
   return (
     <div className="App">
+      <Helmet>
+        <title>Classic Wow Armory</title>
+        <meta
+          name="description"
+          content="A World of Warcraft player resource for displaying character data and performance metrics"
+        />
+      </Helmet>
       <Header text="Classic Wow Armory" />
       <Searchbar
         delete={deleteSearch}
@@ -136,7 +144,7 @@ export const App: React.FC = () => {
               }
             />
           ) : (
-            playerResults.length && (
+            playerResults[0] && (
               <PlayerContext.Provider value={currentSearch}>
                 <TabsWrapper raids={playerResults} />
               </PlayerContext.Provider>
@@ -145,7 +153,9 @@ export const App: React.FC = () => {
         </>
       )}
       {!currentSearch && (
-        <h5 className="greeting"><i>Include all character parameters for faster search results!</i></h5>
+        <h5 className="greeting">
+          <i>Include all character parameters for faster search results!</i>
+        </h5>
       )}
       <footer className="footer">{`© 2020 Classic Wow Armory`}</footer>
     </div>

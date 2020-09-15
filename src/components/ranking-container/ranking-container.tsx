@@ -27,13 +27,11 @@ export const RankingContainer: React.FC<RankingContainerProps> = (props) => {
 
 
   React.useEffect(() => {
-    setLoading(true);
     const abortController = new AbortController();
 
     let hasMorePages = true;
     const doRankingsFetch = async () => {
       var pageCount = 1;
-
       while (pageCount < 6 && hasMorePages && ranking === -1) {
         try {
           const res = await fetch(
@@ -59,10 +57,9 @@ export const RankingContainer: React.FC<RankingContainerProps> = (props) => {
         pageCount++;
       }
       setLoading(false);
-      if (!error) {
+      if (!error && ranking === -1) {
         setError("No ranking data for character was found");
       }
-      console.log(ranking, error)
     };
 
     if (name) {
@@ -111,7 +108,7 @@ export const RankingContainer: React.FC<RankingContainerProps> = (props) => {
     <div className="rankings-wrapper">
       {!loading &&
         (ranking !== -1 ? (
-          <h5 className="ranking">
+          <span className="ranking">
             {ranking < 251 && (
               <img
                 className="ranking-medal-icon"
@@ -120,7 +117,7 @@ export const RankingContainer: React.FC<RankingContainerProps> = (props) => {
               />
             )}
             {ranking}
-          </h5>
+          </span>
         ) : (
           error && <h5 className="error-ranking">{"< 500"}</h5>
         ))}
