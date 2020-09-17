@@ -8,6 +8,7 @@ import { Raid, RaidResults } from "./libs/types";
 import { WCRAFT_API_URL, WCRAFT_API_KEY } from "./libs/placeholders";
 import { TabsWrapper } from "./components/tabs-wrapper/tabs-wrapper";
 import { SearchOptions } from "./components/search-options/search-options";
+import { Banner } from "./components/banner/banner";
 import { Helmet } from "react-helmet";
 
 const raids: Raid[] = [
@@ -122,6 +123,12 @@ export const App: React.FC = () => {
           content="A World of Warcraft player resource for displaying character data and performance metrics"
         />
       </Helmet>
+      {!playerResults[0] && (
+        <Banner
+          heading={""}
+          message={"Report bugs and submit feedback at: admin@armory.live"}
+        />
+      )}
       <Header text="Classic Wow Armory" />
       <Searchbar
         delete={deleteSearch}

@@ -20,16 +20,17 @@
 
 .input-group .form-control {
   color: grey;
-  border: 1px solid darkblue;
+  border: 1px solid #1c406d;
 }
 
-.btn-primary {
+.btn-outline-secondary {
   color: rgb(236, 229, 224);
   background-color: #0382c1;
-  border-color: #0382c1;
+  border-color:#1c406d;
+
 }
 
-.btn-primary:hover {
-  background-color: darkblue;
-  border-color: darkblue;
+.btn-outline-secondary:hover {
+  background-color:#1c406d;
+  border-color: #1c406d;
 }

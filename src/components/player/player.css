@@ -1,7 +1,8 @@
 .player-wrapper {
   display: flex;
   margin-top: 5px;
-  min-width: min-content;
+  width: 100%;
+  min-width: fit-content;
   justify-content: center;
   flex-direction: column;
 }
@@ -14,7 +15,7 @@
 .player-inventory {
   display: flex;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.3);
   flex-direction: column;
 }
 
@@ -23,27 +24,6 @@
   color: rgb(182, 176, 172);
   width: 100%;
   justify-content: flex-start;
-}
-
-.rank {
-  display: flex;
-  align-items: center;
-  font-family: "Open Sans", sans-serif;
-  color: grey;
-  margin-top: 15px;
-  padding-left: 15px;
-}
-
-.rank h4 {
-  font-size: 50px;
-}
-
-@media screen and (max-width: 992px) {
-  .player-wrapper {
-    max-width: 97%;
-    margin: 0 3% 0 3%;
-    min-width: 93%;
-  }
 }
 
 @media screen and (max-width: 600px) {
@@ -55,7 +35,8 @@
 }
 
 #background-image {
-  background-size: auto 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .background-Assassination-Rogue {

@@ -1,0 +1,35 @@
+.alert {
+  width: 99.9vw;
+  opacity: 0.3;
+  position: absolute;
+  top: 1px;
+  height: 45px;
+  background-color: rgb(110, 110, 110);
+}
+
+.alert p {
+  text-align: center;
+  color: whitesmoke;
+  margin-top: -10px;
+}
+
+.close {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 45px;
+  width: 45px;
+  margin-top: -2px;
+}
+
+.alert span {
+  color: whitesmoke;
+}
+@media screen and (max-width: 600px) {
+  .alert {
+    height: fit-content;
+  }
+  .alert p {
+    margin-top: 10px;
+  }
+}

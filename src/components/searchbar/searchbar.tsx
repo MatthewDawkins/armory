@@ -108,7 +108,7 @@ export const Searchbar: React.FC<SearchbarProps> = (props) => {
             ))}
         </FormControl>
         <InputGroup.Append>
-          <Button variant="primary" size="sm" onClick={handleSubmit}>
+          <Button variant="outline-secondary" size="sm" onClick={handleSubmit}>
             Submit
           </Button>
         </InputGroup.Append>

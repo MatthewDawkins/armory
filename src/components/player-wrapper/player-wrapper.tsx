@@ -52,16 +52,21 @@ export const PlayerWrapper: React.FC<PlayerWrapperProps> = ({
   };
 
   const getCurrentGearReport = (rankingsReports: Report[]): any => {
+    let mostCurrentGearReport:any;
+    let mostRecentStartTime = 0;
     for (let i = rankingsReports.length - 1; i >= 0; i--) {
       if (
         rankingsReports[i].gear.find(
           (item: Gear) => item.name !== "Unknown Item"
         )
       ) {
-        return rankingsReports[i];
+        if (mostRecentStartTime < rankingsReports[i].startTime){
+          mostCurrentGearReport = rankingsReports[i];
+          mostRecentStartTime = rankingsReports[i].startTime;
+        }
       }
     }
-    return { startTime: 0, gear: [] };
+    return mostCurrentGearReport;
   };
 
   const handleReport = (rankingReport: any) => {

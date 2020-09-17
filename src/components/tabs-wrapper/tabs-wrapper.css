@@ -1,6 +1,6 @@
 .search-results {
   max-width: 1200px;
-  min-width: 57%;
+  min-width: 1100px;
   height: 100%;
   margin-top: -34px;
 }
@@ -27,13 +27,13 @@
 }
 .tab-container {
   display: flex;
-  width: 100%;
+  width: 95%;
   height: 100%;
 }
 
-@media screen and (max-width: 1800px) {
+@media screen and (max-width: 1000px) {
   .search-results {
-    max-width: 70%;
+    max-width: 1300;
     min-width: fit-content;
     margin-top: 5px;
   }
@@ -47,7 +47,10 @@
 
 @media screen and (max-width: 600px) {
   .search-results {
-    width: 95%;
+    width: 94%;
+    min-width: 95%;
+    max-width: 95%;
     margin-top: 1px;
   }
 }
+
