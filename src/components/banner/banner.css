@@ -1,4 +1,4 @@
-.alert {
+/* .alert {
   width: 99.9vw;
   opacity: 0.3;
   position: absolute;
@@ -7,10 +7,12 @@
   background-color: rgb(110, 110, 110);
 }
 
+
 .alert p {
   text-align: center;
   color: whitesmoke;
   margin-top: -10px;
+  font-size: 15px;
 }
 
 .close {
@@ -32,4 +34,27 @@
   .alert p {
     margin-top: 10px;
   }
+} */
+
+.alert {
+  width: 99.9vw;
+  opacity: 0.9;
+  position: absolute;
+  top: 1px;
+  height: 45px;
+}
+
+.alert p {
+  text-align: center;
+  margin-top: -10px;
+  font-size: 15px;
+}
+
+.close {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 45px;
+  width: 45px;
+  margin-top: -2px;
 }

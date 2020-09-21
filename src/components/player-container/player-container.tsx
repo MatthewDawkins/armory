@@ -12,6 +12,7 @@ type PlayerContainerProps = {
   playerID: number;
   playerClass: string;
   type: string;
+  onPlayerGear: (gear: any[]) => void;
   renderPlayerContainer: (specInfo: SpecInfo) => React.ReactElement;
 };
 
@@ -29,7 +30,6 @@ const initialSpecInfo: SpecInfo = {
 
 export const PlayerContainer: React.FC<PlayerContainerProps> = (props) => {
   const [specInfo, setSpecInfo] = React.useState<SpecInfo>(initialSpecInfo);
-  const [loading, setLoading] = React.useState<boolean>(true);
 
   const {
     playerID,
@@ -37,6 +37,7 @@ export const PlayerContainer: React.FC<PlayerContainerProps> = (props) => {
     label,
     type,
     playerClass,
+    onPlayerGear,
     renderPlayerContainer,
   } = props;
 
@@ -55,7 +56,6 @@ export const PlayerContainer: React.FC<PlayerContainerProps> = (props) => {
           classSpecs.find((specData) => specData.alt.includes(label)) ||
             initialSpecInfo
         );
-
         return;
       }
       try {
@@ -72,7 +72,6 @@ export const PlayerContainer: React.FC<PlayerContainerProps> = (props) => {
       } catch (error) {
         console.log(error);
       }
-      setLoading(false)
     };
 
     if (playerID && type === "DPS") {
@@ -82,6 +81,41 @@ export const PlayerContainer: React.FC<PlayerContainerProps> = (props) => {
       myAbortController.abort();
     };
   }, [playerID, playerClass, type, reportID, label]);
+
+  const getPlayerInfoFromEventsSummary = (
+    playerId: number,
+    events: any[]
+  ): any => {
+    const playerCombatantInfo = events.find(
+      (event) => event.type === "combatantinfo" && event.sourceID === playerId
+    );
+    return playerCombatantInfo;
+  };
+
+
+  React.useEffect(() => {
+    const doEventsSummaryFetch = async () => {
+      try {
+        const res = await fetch(
+          `${WCRAFT_API_URL}/report/events/summary/${reportID}?&sourceid=${playerID}&start=0&end=9999999&${WCRAFT_API_KEY}`
+        );
+        const results = await res.json();
+        if (results && results.events.length) {
+          const info = getPlayerInfoFromEventsSummary(playerID, results.events);
+
+          if (info && info.gear) {
+            console.log("info", info, info.gear);
+            onPlayerGear(info.gear);
+          }
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+    if (playerID && reportID) {
+      doEventsSummaryFetch();
+    }
+  }, [playerID, reportID]);
 
   const getTalentUsed = (events: CombatEvent[], specs: any[]) => {
     for (let i = 0; i < specs.length; i++) {

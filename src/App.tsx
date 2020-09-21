@@ -32,6 +32,9 @@ const raids: Raid[] = [
   },
 ];
 
+const siteDownMsg = "Sorry! We are currently experiencing errors retrieving player data."
+const feedbackMsg = "Any feedback is appreciated! - admin@armory.live";
+
 export const App: React.FC = () => {
   const [currentSearch, setCurrentSearch] = React.useState("");
   const [prevSearches, setPrevSearches] = React.useState<string[]>([]);
@@ -43,7 +46,7 @@ export const App: React.FC = () => {
     setLoading(true);
     const raidRankings = raids.map((raid) => {
       return doParsesFetch(
-        `${WCRAFT_API_URL}/parses/character/${search}?zone=${raid.raidID}`,
+        `${WCRAFT_API_URL}/parses/character/${search}?zone=${raid.raidID}&includeCombantInfo=true`,
         3,
         raid
       );
@@ -81,6 +84,7 @@ export const App: React.FC = () => {
           ? Array.from(new Set([...prev, search]))
           : Array.from(new Set([...prev.slice(1, prev.length), search]))
       );
+      console.log(results)
       setPlayerResults(results);
     } else {
       setError("Valid data for player could not be found");
@@ -126,7 +130,7 @@ export const App: React.FC = () => {
       {!playerResults[0] && (
         <Banner
           heading={""}
-          message={"Report bugs and submit feedback at: admin@armory.live"}
+          message={siteDownMsg}
         />
       )}
       <Header text="Classic Wow Armory" />

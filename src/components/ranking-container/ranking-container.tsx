@@ -39,7 +39,6 @@ export const RankingContainer: React.FC<RankingContainerProps> = (props) => {
           );
           const rankingsResults = await res.json();
           hasMorePages = rankingsResults.hasMorePages;
-          console.log(rankingsResults, encounterID)
           const playerRanking = getPlayerRanking(
             name,
             rankingsResults.rankings

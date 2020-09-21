@@ -13,7 +13,7 @@ export const Banner: React.FC<BannerProps> = ({ heading, message }) => {
   return (
     <>
       {show && (
-        <Alert variant="dark" onClose={() => setShow(false)} dismissible>
+        <Alert variant="danger" onClose={() => setShow(false)} dismissible>
           <Alert.Heading>{heading}</Alert.Heading>
           <p>{message}</p>
         </Alert>

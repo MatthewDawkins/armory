@@ -5,7 +5,10 @@ import { WCRAFT_API_URL, WCRAFT_API_KEY } from "../../libs/placeholders";
 import { PlayerContext } from "../../hooks/playerContext";
 import { PlayerContainer } from "../player-container/player-container";
 import { SpecInfo } from "../../libs/types";
+import { Inventory } from "../inventory/inventory";
+import { Timestamp } from "../timestamp/timestamp";
 import "./player.css";
+import { render } from "enzyme";
 
 type PlayerProps = {
   playerClass: string;
@@ -13,8 +16,9 @@ type PlayerProps = {
   spec: string;
   reportID: string;
   metrics: React.ReactElement;
-  inventory: React.ReactElement;
   guildName: string;
+  inventory: React.ReactElement;
+  handlePlayerGear: (gear: any[]) => void;
 };
 
 type Friendly = {
@@ -39,9 +43,10 @@ export const Player: React.FC<PlayerProps> = (props) => {
     type,
     reportID,
     metrics,
-    inventory,
     spec,
     guildName,
+    handlePlayerGear,
+    inventory,
   } = props;
 
   const [name] = useContext(PlayerContext).split("/");
@@ -104,6 +109,7 @@ export const Player: React.FC<PlayerProps> = (props) => {
         reportID={reportID}
         label={getPlayerLabel(type, spec, playerClass)}
         playerID={friendlyData.id}
+        onPlayerGear={(gear: any[]) => handlePlayerGear(gear)}
         renderPlayerContainer={(specInfo: SpecInfo) => (
           <div
             id="background-image"
