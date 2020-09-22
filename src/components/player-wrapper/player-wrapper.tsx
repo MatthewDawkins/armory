@@ -9,10 +9,13 @@ import { Report, ValidRaidData } from "../../libs/types";
 import "./player-wrapper.css";
 
 const playerClasses = require("../../libs/classes.json");
+const ITEM_NAMES = require("../../libs/item_names.json");
 
 type PlayerWrapperProps = {
   raid: ValidRaidData;
 };
+
+const initialGearData:any = [];
 
 export const PlayerWrapper: React.FC<PlayerWrapperProps> = ({
   raid,
@@ -21,13 +24,26 @@ export const PlayerWrapper: React.FC<PlayerWrapperProps> = ({
     playerReportFromRankings,
     setPlayerReportFromRankings,
   ] = React.useState<any>({});
-  const [gear, setGear] = React.useState<any[]>();
-  const updatePlayerGear = (gear: any[]) => {
+  const [gear, setGear] = React.useState<any[]>(initialGearData);
+
+  const addNameToItems = (gear:any) => {
+    return gear.map((item:any) => {
+      const name = ITEM_NAMES[item.id].name;
+      return {
+        ...item,
+        name : name
+      }
+    });
+  };
+
+  const updatePlayerGear = async (gear: any) => {
     console.log(gear);
     if (gear && gear.length) {
-      setGear(gear);
+      const updatedGear = addNameToItems(gear)
+      setGear(updatedGear);
     }
   };
+
   const validateIsSpec = (playerRankingsSpec: string): boolean =>
     !(
       playerRankingsSpec === "DPS" ||
@@ -72,34 +88,6 @@ export const PlayerWrapper: React.FC<PlayerWrapperProps> = ({
     return mostCurrentReport;
   };
 
-  // const getCurrentGearReport = (rankingsReports: Report[]): any => {
-  //   let mostCurrentGearReport: any;
-  //   let mostRecentStartTime = 0;
-
-  //   for (let i = rankingsReports.length - 1; i >= 0; i--) {
-  //     if (
-  //       rankingsReports[i] &&
-  //       rankingsReports[i].gear &&
-  //       rankingsReports[i].startTime
-  //     ) {
-  //       if (
-  //         rankingsReports[i].gear.find(
-  //           (item: Gear) => item.name !== "Unknown Item"
-  //         )
-  //       ) {
-  //         if (mostRecentStartTime < rankingsReports[i].startTime) {
-  //           mostCurrentGearReport = rankingsReports[i];
-  //           mostRecentStartTime = rankingsReports[i].startTime;
-  //         }
-  //       }
-  //     }
-  //   }
-  //   console.log(mostCurrentGearReport);
-  //   return mostCurrentGearReport
-  //     ? mostCurrentGearReport
-  //     : { gear: [], startTime: 0 };
-  // };
-
   const handleReport = (rankingReport: any) => {
     setPlayerReportFromRankings(rankingReport);
   };
@@ -116,21 +104,6 @@ export const PlayerWrapper: React.FC<PlayerWrapperProps> = ({
       rankingMetric={playerMetric}
       onValidReport={handleReport}
     />
-  );
-
-  const reportInventory: React.ReactElement | any = gear ? (
-    <div className="player-inventory">
-      <Timestamp
-        milliseconds={mostRecentReport && mostRecentReport.startTime}
-      />
-      <Inventory
-        items={gear.map((item: any) =>
-          item.name === "Unknown Item" ? 0 : item
-        )}
-      />
-    </div>
-  ) : (
-    false
   );
 
   return (
@@ -150,7 +123,14 @@ export const PlayerWrapper: React.FC<PlayerWrapperProps> = ({
           }
         />
       }
-      inventory={reportInventory}
+      inventory={
+        <div className="player-inventory">
+          <Timestamp
+            milliseconds={mostRecentReport && mostRecentReport.startTime}
+          />
+          <Inventory items={gear} />
+        </div>
+      }
     />
   );
 };

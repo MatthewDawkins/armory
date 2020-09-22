@@ -5,10 +5,7 @@ import { WCRAFT_API_URL, WCRAFT_API_KEY } from "../../libs/placeholders";
 import { PlayerContext } from "../../hooks/playerContext";
 import { PlayerContainer } from "../player-container/player-container";
 import { SpecInfo } from "../../libs/types";
-import { Inventory } from "../inventory/inventory";
-import { Timestamp } from "../timestamp/timestamp";
 import "./player.css";
-import { render } from "enzyme";
 
 type PlayerProps = {
   playerClass: string;
