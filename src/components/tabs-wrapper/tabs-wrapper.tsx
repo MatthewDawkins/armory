@@ -12,6 +12,8 @@ type TabsWrapperProps = {
 
 export const TabsWrapper: React.FC<TabsWrapperProps> = ({ raids }) => {
   const playerSearch = useContext(PlayerContext);
+
+
   const getMostRecentValidRaid = (raids: RaidResults[]): string => {
     for (let i = raids.length - 1; i >= 0; i--) {
       if (raids[i].reports) {

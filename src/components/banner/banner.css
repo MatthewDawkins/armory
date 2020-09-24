@@ -1,6 +1,6 @@
-/* .alert {
+.alert {
   width: 99.9vw;
-  opacity: 0.3;
+  opacity: 0.4;
   position: absolute;
   top: 1px;
   height: 45px;
@@ -34,27 +34,5 @@
   .alert p {
     margin-top: 10px;
   }
-} */
-
-.alert {
-  width: 99.9vw;
-  opacity: 0.9;
-  position: absolute;
-  top: 1px;
-  height: 45px;
 }
 
-.alert p {
-  text-align: center;
-  margin-top: -10px;
-  font-size: 15px;
-}
-
-.close {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 45px;
-  width: 45px;
-  margin-top: -2px;
-}

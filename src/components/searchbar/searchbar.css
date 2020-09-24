@@ -1,5 +1,6 @@
 .searchbar {
   min-height: 35px;
+  max-height: 35px;
   opacity: 0.97;
   display: flex;
   justify-content: center;
@@ -9,7 +10,6 @@
   width: 40%;
   max-width: 640px;
   z-index: 999;
-
 }
 
 @media screen and (max-width: 600px) {
@@ -26,11 +26,10 @@
 .btn-outline-secondary {
   color: rgb(236, 229, 224);
   background-color: #0382c1;
-  border-color:#1c406d;
-
+  border-color: #1c406d;
 }
 
 .btn-outline-secondary:hover {
-  background-color:#1c406d;
+  background-color: #1c406d;
   border-color: #1c406d;
 }

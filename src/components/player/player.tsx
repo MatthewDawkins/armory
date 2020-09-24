@@ -50,7 +50,7 @@ export const Player: React.FC<PlayerProps> = (props) => {
 
   React.useEffect(() => {
     const abortController = new AbortController();
-    const doFightsReportFetch = async () => {
+    const fetchFightsReport = async () => {
       try {
         const res = await fetch(
           `${WCRAFT_API_URL}/report/fights/${reportID}?&${WCRAFT_API_KEY}`
@@ -71,7 +71,7 @@ export const Player: React.FC<PlayerProps> = (props) => {
       }
     };
     if (reportID) {
-      doFightsReportFetch();
+      fetchFightsReport();
     }
     return () => {
       abortController.abort();

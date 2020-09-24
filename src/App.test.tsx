@@ -1,11 +1,24 @@
-import React from 'react';
+import * as React from 'react';
 import { shallow } from 'enzyme';
 import { App } from './App';
-import { AsyncHook } from 'async_hooks';
 
-// it('renders App', () => {
-//   const wrapper = shallow(<App />);
-//   expect(wrapper).toBeTruthy;
-// });
+jest.mock("./")
+
+describe('<App/>', () => {
+  it("renders", () => {
+    const wrapper = shallow(<App />);
+    expect(wrapper).toBeTruthy;
+  });
+
+  describe('when a user submits form inputs', () => {
+    it('should mount search-options component on invalid form data', () => {
+
+
+    })
+  })
+
+
+
+});
 
 

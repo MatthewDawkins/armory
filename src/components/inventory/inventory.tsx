@@ -24,7 +24,7 @@ export const Inventory: React.FC<InventoryProps> = (props) => (
       <div className="col-lg-6 col-xs-12">
         <InventorySide
           items={slotLeftIDs.map(
-            (id) => props.items[id - 1] || renderEmptySlot(id)
+            (id) => (props.items[id - 1] && props.items[id-1].name ? props.items[id - 1] : renderEmptySlot(id))
           )}
           side="left"
         />
@@ -32,14 +32,14 @@ export const Inventory: React.FC<InventoryProps> = (props) => (
       <div className="col-lg-6 col-xs-12">
         <InventorySide
           items={slotRightIDs.map(
-            (id) => props.items[id - 1] || renderEmptySlot(id)
+            (id) => (props.items[id - 1] && props.items[id-1].name ? props.items[id - 1] : renderEmptySlot(id))
           )}
           side="right"
         />
       </div>
       <InventoryBottom
         items={slotBottomIDs.map(
-          (id) => props.items[id - 1] || renderEmptySlot(id)
+          ((id) => props.items[id - 1] && props.items[id-1].name ? props.items[id - 1] : renderEmptySlot(id))
         )}
       />
     </div>

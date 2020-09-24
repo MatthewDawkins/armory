@@ -32,7 +32,7 @@ const raids: Raid[] = [
   },
 ];
 
-const siteDownMsg = "Sorry! We are currently experiencing errors retrieving player data."
+
 const feedbackMsg = "Any feedback is appreciated! - admin@armory.live";
 
 export const App: React.FC = () => {
@@ -42,20 +42,20 @@ export const App: React.FC = () => {
   const [error, setError] = React.useState("");
   const [playerResults, setPlayerResults] = React.useState<any[]>([]);
 
-  const doParsesFetchForEachRaid = async (raids: Raid[], search: string) => {
+  const fetchAllParses = async (raids: Raid[], search: string) => {
     setLoading(true);
-    const raidRankings = raids.map((raid) => {
-      return doParsesFetch(
+    const parses = raids.map((raid) => {
+      return fetchParseReport(
         `${WCRAFT_API_URL}/parses/character/${search}?zone=${raid.raidID}&includeCombantInfo=true`,
         3,
         raid
       );
     });
-    const results: RaidResults[] = await Promise.all(raidRankings);
+    const results: RaidResults[] = await Promise.all(parses);
     handleResults(results, search);
   };
 
-  const doParsesFetch = async (baseUrl: string, phases: number, raid: Raid) => {
+  const fetchParseReport = async (baseUrl: string, phases: number, raid: Raid) => {
     for (let i = phases; i >= 0; i--) {
       try {
         const res = await fetch(
@@ -109,7 +109,7 @@ export const App: React.FC = () => {
   const handleSearch = (search: string) => {
     setCurrentSearch(search);
     if (isValidSearch(search)) {
-      doParsesFetchForEachRaid(raids, search);
+      fetchAllParses(raids, search);
     }
     return;
   };
@@ -130,7 +130,7 @@ export const App: React.FC = () => {
       {!playerResults[0] && (
         <Banner
           heading={""}
-          message={siteDownMsg}
+          message={feedbackMsg}
         />
       )}
       <Header text="Classic Wow Armory" />

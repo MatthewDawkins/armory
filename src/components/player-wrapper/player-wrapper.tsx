@@ -15,36 +15,31 @@ type PlayerWrapperProps = {
   raid: ValidRaidData;
 };
 
-const initialGearData:any = [];
+const initialGearData: any = [];
 
 export const PlayerWrapper: React.FC<PlayerWrapperProps> = ({
   raid,
 }: PlayerWrapperProps) => {
-  const [
-    playerReportFromRankings,
-    setPlayerReportFromRankings,
-  ] = React.useState<any>({});
+  const [rankingReport, setRankingReport] = React.useState<any>({});
   const [gear, setGear] = React.useState<any[]>(initialGearData);
 
-  const addNameToItems = (gear:any) => {
-    return gear.map((item:any) => {
+  const updateGearItemsWithNames = (gear: any) => {
+    return gear.map((item: any) => {
       const name = ITEM_NAMES[item.id].name;
       return {
         ...item,
-        name : name
-      }
+        name: name,
+      };
     });
   };
 
   const updatePlayerGear = async (gear: any) => {
-    console.log(gear);
     if (gear && gear.length) {
-      const updatedGear = addNameToItems(gear)
-      setGear(updatedGear);
+      setGear(updateGearItemsWithNames(gear));
     }
   };
 
-  const validateIsSpec = (playerRankingsSpec: string): boolean =>
+  const isSpec = (playerRankingsSpec: string): boolean =>
     !(
       playerRankingsSpec === "DPS" ||
       playerRankingsSpec === "Healer" ||
@@ -63,7 +58,7 @@ export const PlayerWrapper: React.FC<PlayerWrapperProps> = ({
     } else {
       playerTypeOrSpec = parsesReports[0].spec;
     }
-    return validateIsSpec(playerTypeOrSpec) ? "DPS" : playerTypeOrSpec;
+    return isSpec(playerTypeOrSpec) ? "DPS" : playerTypeOrSpec;
   };
 
   const getClassId = (playerClass: string): number => {
@@ -73,51 +68,45 @@ export const PlayerWrapper: React.FC<PlayerWrapperProps> = ({
     return classType ? classType.id : -1;
   };
 
-  const getMostCurrentReport = (rankingsReports: Report[]): any => {
-    let mostRecentStartTime = 0;
-    let mostCurrentReport;
+  const getLatestReport = (rankingsReports: Report[]): any => {
+    let latestStartTime = 0;
+    let latestReport;
     rankingsReports.forEach((report) => {
-      const currentReportStartTime = report.startTime;
-      if (currentReportStartTime) {
-        if (currentReportStartTime > mostRecentStartTime) {
-          mostRecentStartTime = currentReportStartTime;
-          mostCurrentReport = report;
+      const startTime = report.startTime;
+      if (startTime) {
+        if (startTime > latestStartTime) {
+          latestStartTime = startTime;
+          latestReport = report;
         }
       }
     });
-    return mostCurrentReport;
-  };
-
-  const handleReport = (rankingReport: any) => {
-    setPlayerReportFromRankings(rankingReport);
+    return latestReport;
   };
 
   const playerType = getPlayerType(raid.reports);
   const playerMetric = playerType === "Healer" ? "hps" : "dps";
-  const mostRecentReport = getMostCurrentReport(raid.reports);
-
-  const leftMetric: React.ReactElement = (
-    <RankingContainer
-      encounterID={raid.encounterID}
-      phaseID={raid.phaseID}
-      classID={getClassId(raid.reports[0].class)}
-      rankingMetric={playerMetric}
-      onValidReport={handleReport}
-    />
-  );
+  const mostRecentReport = getLatestReport(raid.reports);
 
   return (
     <Player
       handlePlayerGear={updatePlayerGear}
       key={raid.reports[0].encounterName}
       type={playerType}
-      spec={validateIsSpec(raid.reports[0].spec) ? raid.reports[0].spec : ""}
+      spec={isSpec(raid.reports[0].spec) ? raid.reports[0].spec : ""}
       playerClass={raid.reports[0].class}
       reportID={mostRecentReport.reportID}
-      guildName={playerReportFromRankings.guildName}
+      guildName={rankingReport.guildName}
       metrics={
         <PlayerMetrics
-          left={leftMetric}
+          left={
+            <RankingContainer
+              encounterID={raid.encounterID}
+              phaseID={raid.phaseID}
+              classID={getClassId(raid.reports[0].class)}
+              rankingMetric={playerMetric}
+              onValidReport={(report: any) => setRankingReport(report)}
+            />
+          }
           right={
             <PercentileContainer zoneID={raid.raidID} phaseID={raid.phaseID} />
           }
