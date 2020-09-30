@@ -1,8 +1,11 @@
 # Classic Wow Armory
-#### Classic Wow Armory is a Warcraftlogs API wrapper application for displaying character data.
+Classic Wow Armory is a Warcraftlogs API wrapper application for displaying character data.
+
+---
 
 ### Requirements
 ##### Node and npm are required for development.
+
 
 - ##### Node installation on Windows
 
