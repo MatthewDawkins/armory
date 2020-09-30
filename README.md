@@ -4,7 +4,7 @@ Classic Wow Armory is a Warcraftlogs API wrapper application for displaying char
 ---
 
 ### Requirements
-##### Node and npm are required for development.
+  Node and npm are required for development.
 
 
 - ##### Node installation on Windows
