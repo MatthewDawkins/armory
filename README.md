@@ -7,7 +7,7 @@ Node and npm are required for development.
 
 - ##### Node installation on Windows
 
-  Just go on [official Node.js website](https://nodejs.org/) and download the installer.
+  You can download the node installer here: [official Node.js website](https://nodejs.org/).
 Also, be sure to have `git` available in your PATH, `npm` might need it (You can find git [here](https://git-scm.com/)).
 
 - ##### Node installation on Ubuntu
